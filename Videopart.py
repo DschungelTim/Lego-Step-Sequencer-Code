@@ -1,7 +1,5 @@
 import numpy as np
 import cv2
-#import rtmidi
-#import mido
 
 # Wertebereich Hue: 0-180, Sat: 0-255
 hue_gruen = 75
@@ -23,13 +21,29 @@ sat_max_orange = 200
 
 # Filtergröße Medianfilter
 kSize = 5
-
 # Kernel für Closing-Filter
 kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (10,10))
 
-# Midi Ports suchen
-#print("MIDI output ports: ", mido.get_output_names())
-#midiOutput = mido.open_output("LoopBe Internal MIDI 1")
+# Funktion, um Masken zu erstellen und durch Filter zu verbessern
+def Masken(hue_min, hue_max, sat_min, sat_max) :
+    mask_h = cv2.inRange(h, hue_min, hue_max)
+    mask_s = cv2.inRange(s, sat_min, sat_max)
+    mask = cv2.multiply(mask_h, mask_s)
+    mask = cv2.medianBlur(mask, kSize)
+    mask = cv2.morphologyEx(mask, cv2.MORPH_CLOSE, kernel)
+    return mask
+
+# Funktion, um die Schwerpunkte der einzelnen Steine zu berechnen
+def Schwerpunkte(maske) :
+    contours, _ = cv2.findContours(maske, cv2.RETR_CCOMP, cv2.CHAIN_APPROX_TC89_L1)
+    centres = []
+    for i in range(len(contours)):
+        try:
+            moments = cv2.moments(contours[i])
+            centres.append((int(moments['m10']/moments['m00']), int(moments['m01']/moments['m00'])))
+        except:
+            print("Wups")
+    return centres
 
 # Webcam öffnen
 cap = cv2.VideoCapture(0)
@@ -42,37 +56,24 @@ while cap.isOpened():
     hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
     h, s, v = cv2.split(hsv)
 
-    # Masken erstellen und Farbbereich festlegen
-    mask_h_blau = cv2.inRange(h, hue_blau, hue_max_blau)
-    mask_s_blau = cv2.inRange(s, sat_blau, sat_max_blau)
-    mask_blau = cv2.multiply(mask_h_blau, mask_s_blau)
-    mask_blau = cv2.medianBlur(mask_blau, kSize)
-    mask_blau = cv2.morphologyEx(mask_blau, cv2.MORPH_CLOSE, kernel)
+    # Maskenfunktion für jede Farbe aufrufen
+    mask_blau = Masken(hue_blau, hue_max_blau, sat_blau, sat_max_blau)
+    mask_rot = Masken(hue_rot, hue_max_rot, sat_rot, sat_max_rot)
+    mask_gruen = Masken(hue_gruen, hue_max_gruen, sat_gruen, sat_max_gruen)
+    mask_orange = Masken(hue_orange, hue_max_orange, sat_orange, sat_max_orange)
 
-    mask_h_rot = cv2.inRange(h, hue_rot, hue_max_rot)
-    mask_s_rot = cv2.inRange(s, sat_rot, sat_max_rot)
-    mask_rot = cv2.multiply(mask_h_rot, mask_s_rot)
-    mask_rot = cv2.medianBlur(mask_rot, kSize)
-    mask_rot = cv2.morphologyEx(mask_rot, cv2.MORPH_CLOSE, kernel)
+    # Funktionen aufrufen, um Schwerpunkte zu berechen, Ergebis wird als Array gespeichert mit jeweils x,y Koordinate
+    center_blau = Schwerpunkte(mask_blau)
+    center_rot = Schwerpunkte(mask_rot)
+    center_gruen = Schwerpunkte(mask_gruen)
+    center_orange = Schwerpunkte(mask_orange)
 
-    mask_h_gruen = cv2.inRange(h, hue_gruen, hue_max_gruen)
-    mask_s_gruen = cv2.inRange(s, sat_gruen, sat_max_gruen)
-    mask_gruen = cv2.multiply(mask_h_gruen, mask_s_gruen)
-    mask_gruen = cv2.medianBlur(mask_gruen, kSize)
-    mask_gruen = cv2.morphologyEx(mask_gruen, cv2.MORPH_CLOSE, kernel)
-
-    mask_h_orange = cv2.inRange(h, hue_orange, hue_max_orange)
-    mask_s_orange = cv2.inRange(s, sat_orange, sat_max_orange)
-    mask_orange = cv2.multiply(mask_h_orange, mask_s_orange)
-    mask_orange = cv2.medianBlur(mask_orange, kSize)
-    mask_orange = cv2.morphologyEx(mask_orange, cv2.MORPH_CLOSE, kernel)
-
+    # Video und Masken anzeigen
     cv2.imshow("Video", frame)
     cv2.imshow("Rot", mask_rot)
     cv2.imshow("Blau", mask_blau)
     cv2.imshow("Grün", mask_gruen)
     cv2.imshow("Orange", mask_orange)
-
 
     if cv2.waitKey(25) != -1:
         break
