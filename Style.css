@@ -1,0 +1,51 @@
+html, body {
+    height: 100%;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+}
+
+#Startbutton {
+    height: 5%;
+    width: 10%;
+    font-size: 40px;
+    position: relative;
+    position: middle;
+    
+}
+
+.Feld {
+    width: 11%;
+    height: 11%;
+    float: left;
+    border-style: solid;
+}
+
+.Spur1 {
+    background-color: green;
+}
+
+.Spur2 {
+    background-color: greenyellow;
+}
+
+.Spur3 {
+    background-color: yellow;
+}
+
+.Spur4 {
+    background-color: orange;
+}
+
+.slider {
+    -webkit-appearance: slider-vertical;
+    height: 70%;
+}
+
+.Sliderschrift {
+    font-size: 30px;
+}
+
+.slidecontainer {
+    height: 25%;
+}
