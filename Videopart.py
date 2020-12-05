@@ -2,22 +2,11 @@ import numpy as np
 import cv2
 
 # Wertebereich Hue: 0-180, Sat: 0-255
-hue_gruen = 75
-hue_max_gruen = 90
-sat_gruen = 235 
-sat_max_gruen = 255
-hue_blau = 104 
-hue_max_blau = 120
-sat_blau = 248 
-sat_max_blau = 255
-hue_rot = 165 
-hue_max_rot = 185
-sat_rot = 200 
-sat_max_rot = 235
-hue_orange = 5
-hue_max_orange = 40
-sat_orange = 100
-sat_max_orange = 200
+# [Hue_min, Hue_max, Sat_min, Sat_max]
+gruen = [75, 90, 235, 255]
+blau = [104, 120, 248, 255]
+rot = [165, 185, 200, 235]
+orange = [5, 40, 100, 200]
 
 # Filtergröße Medianfilter
 kSize = 5
@@ -57,10 +46,10 @@ while cap.isOpened():
     h, s, v = cv2.split(hsv)
 
     # Maskenfunktion für jede Farbe aufrufen
-    mask_blau = Masken(hue_blau, hue_max_blau, sat_blau, sat_max_blau)
-    mask_rot = Masken(hue_rot, hue_max_rot, sat_rot, sat_max_rot)
-    mask_gruen = Masken(hue_gruen, hue_max_gruen, sat_gruen, sat_max_gruen)
-    mask_orange = Masken(hue_orange, hue_max_orange, sat_orange, sat_max_orange)
+    mask_blau = Masken(blau[0], blau[1], blau[2], blau[3])
+    mask_rot = Masken(rot[0], rot[1], rot[2], rot[3])
+    mask_gruen = Masken(gruen[0], gruen[1], gruen[2], gruen[3])
+    mask_orange = Masken(orange[0], orange[1], orange[2], orange[3])
 
     # Funktionen aufrufen, um Schwerpunkte zu berechen, Ergebis wird als Array gespeichert mit jeweils x,y Koordinate
     center_blau = Schwerpunkte(mask_blau)
