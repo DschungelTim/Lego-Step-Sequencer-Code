@@ -3,15 +3,20 @@ import cv2
 
 # Wertebereich Hue: 0-180, Sat: 0-255
 # [Hue_min, Hue_max, Sat_min, Sat_max]
-gruen = [75, 90, 235, 255]
-blau = [104, 120, 248, 255]
+gruen = [60, 90, 153, 255]
+blau = [100, 120, 204, 255]
 rot = [165, 185, 200, 235]
-orange = [5, 40, 100, 200]
+orange = [0, 15, 130, 210]
 
 # Filtergröße Medianfilter
-kSize = 5
+kSize = 7
 # Kernel für Closing-Filter
-kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (10,10))
+kernelClosing = cv2.getStructuringElement(cv2.MORPH_RECT, (5,5))
+# Kernel für Opening Filter
+kernelOpening = cv2.getStructuringElement(cv2.MORPH_RECT, (5,5))
+
+#kernel für Erosion Filter
+kernelErosion = np.ones((7,7), np.uint8)
 
 # Funktion, um Masken zu erstellen und durch Filter zu verbessern
 def Masken(hue_min, hue_max, sat_min, sat_max) :
@@ -19,7 +24,9 @@ def Masken(hue_min, hue_max, sat_min, sat_max) :
     mask_s = cv2.inRange(s, sat_min, sat_max)
     mask = cv2.multiply(mask_h, mask_s)
     mask = cv2.medianBlur(mask, kSize)
-    mask = cv2.morphologyEx(mask, cv2.MORPH_CLOSE, kernel)
+    mask = cv2.morphologyEx(mask, cv2.MORPH_OPEN, kernelOpening)
+    mask = cv2.morphologyEx(mask, cv2.MORPH_CLOSE, kernelClosing)
+    mask = cv2.erode(mask, kernelErosion, iterations=2)
     return mask
 
 # Funktion, um die Schwerpunkte der einzelnen Steine zu berechnen
