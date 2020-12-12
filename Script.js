@@ -1,6 +1,7 @@
 var context = new AudioContext();
 
-button = document.querySelector('#Startbutton');
+button = document.querySelector('#startButton');
+isPlaying = false;
 
 //Tempo initialisieren
 var tempo = 90; 
@@ -8,6 +9,9 @@ var eighthNoteTime = (60 / tempo) / 2;
 
 // leeres Array für Sounds
 var audioBuffers = [];
+
+// Array für Felderkennung, 32 Felder wobei 0 aus ist und 1-4 verschiedene Farben
+var felder = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 
 // MIDI Initialisieren
 if (navigator.requestMIDIAccess) {
@@ -22,6 +26,16 @@ if (navigator.requestMIDIAccess) {
     });
 } else {
     alert("No MIDI support in your browser.");
+}
+
+// Wenn MIDI-Nachricht kommt, speichere im Array an der Richtigen Stelle die Farbe in Form von 0(aus), 1(farb1)...usw
+function onMIDIMessage(event) {
+    switch (event.data[0]) {
+        case 144:
+            // Feld- und Farberkennung und schreiben ins Array
+            felder[event.data[1]] = event.data[2];
+            break;
+    }
 }
 
 // Audiosound laden
@@ -45,3 +59,12 @@ function playSound(buffer, time) {
     source.connect(context.destination);
     source.start(time);
 }
+
+startButton.addEventListener("click", function (e) {
+    if (isPlaying) {
+        startButton.innerHTML = "Start";
+    } else {
+        startButton.innerHTML = "Stop";
+    }
+    isPlaying = !isPlaying;
+});

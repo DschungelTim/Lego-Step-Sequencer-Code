@@ -1,3 +1,6 @@
+// Array für Felderkennung, 32 Felder wobei 0 aus ist und 1-4 verschiedene Farben
+var felder = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+
 if (navigator.requestMIDIAccess) {
     navigator.requestMIDIAccess({sysex: false}).then(function (midiAccess) {
         midi = midiAccess;
@@ -12,23 +15,13 @@ if (navigator.requestMIDIAccess) {
     alert("No MIDI support in your browser.");
 }
 
+// Wenn MIDI-Nachri
 function onMIDIMessage(event) {
-    // event.data is an array
-    // event.data[0] = on (144) / off (128) / controlChange (176)  / pitchBend (224) / ...
-    // event.data[1] = midi note
-    // event.data[2] = velocity
-
     switch (event.data[0]) {
-    case 144:
-        // your function startNote(note, velocity)
-        //startNote(event.data[1], event.data[2]);
-        document.querySelector("#data1").innerHTML = event.data[1];
-        document.querySelector("#data2").innerHTML = event.data[2];
-        break;
-    case 128:
-        // your function stopNote(note, velocity)
-        document.querySelector("#data3").innerHTML = event.data[1];
-        document.querySelector("#data4").innerHTML = event.data[2];
-        break;
+        case 144:
+            // Feld- und Farberkennung und schreiben ins Array
+            felder[event.data[1]] = event.data[2];
+            console.log(felder);
+            break;
     }
 }
