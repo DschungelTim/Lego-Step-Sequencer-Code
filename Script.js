@@ -1,6 +1,7 @@
 var context = new AudioContext();
 
-button = document.querySelector('#Startbutton');
+button = document.querySelector('#startButton');
+isPlaying = false;
 
 //Tempo initialisieren
 var tempo = 90; 
@@ -58,3 +59,12 @@ function playSound(buffer, time) {
     source.connect(context.destination);
     source.start(time);
 }
+
+startButton.addEventListener("click", function (e) {
+    if (isPlaying) {
+        startButton.innerHTML = "Start";
+    } else {
+        startButton.innerHTML = "Stop";
+    }
+    isPlaying = !isPlaying;
+});
