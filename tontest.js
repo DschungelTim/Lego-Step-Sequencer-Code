@@ -7,7 +7,7 @@ var element = document.getElementById('B1_2'),
     document.write (color);
 
 if (color === "rgb(255, 0, 0)") {
-    document.querySelector("#Startbutton").addEventListener("mouseup", function(e){
+    document.querySelector("#startButton").addEventListener("mouseup", function(e){
         let sound = new Audio("/Sounds/sound1.wav");
         let soundNode = context.createMediaElementSource(sound);
         let gainNode = context.createGain();    
@@ -18,7 +18,7 @@ if (color === "rgb(255, 0, 0)") {
     });    
     }
     else if (color === "rgb(0, 128, 0)") {
-        document.querySelector("#Startbutton").addEventListener("mouseup", function(e){
+        document.querySelector("#startButton").addEventListener("mouseup", function(e){
             let sound = new Audio("/Sounds/sound2.wav");
             let soundNode = context.createMediaElementSource(sound);
             let gainNode = context.createGain();    
@@ -29,7 +29,7 @@ if (color === "rgb(255, 0, 0)") {
         });
         }
         else if (color === "rgb(0, 0, 255)") {
-            document.querySelector("#Startbutton").addEventListener("mouseup", function(e){
+            document.querySelector("#startButton").addEventListener("mouseup", function(e){
                 let sound = new Audio("/Sounds/sound3.wav");
                 let soundNode = context.createMediaElementSource(sound);
                 let gainNode = context.createGain();   
@@ -40,7 +40,7 @@ if (color === "rgb(255, 0, 0)") {
             });
             }
             else if (color === "rgb(255, 255, 0)") {
-                document.querySelector("#Startbutton").addEventListener("mouseup", function(e){
+                document.querySelector("#startButton").addEventListener("mouseup", function(e){
                     let sound = new Audio("/Sounds/sound4.wav");
                     let soundNode = context.createMediaElementSource(sound);
                     let gainNode = context.createGain();   
