@@ -9,6 +9,9 @@ var eighthNoteTime = (60 / tempo) / 2;
 // leeres Array für Sounds
 var audioBuffers = [];
 
+// Array für Felderkennung, 32 Felder wobei 0 aus ist und 1-4 verschiedene Farben
+var felder = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+
 // MIDI Initialisieren
 if (navigator.requestMIDIAccess) {
     navigator.requestMIDIAccess({sysex: false}).then(function (midiAccess) {
@@ -22,6 +25,16 @@ if (navigator.requestMIDIAccess) {
     });
 } else {
     alert("No MIDI support in your browser.");
+}
+
+// Wenn MIDI-Nachricht kommt, speichere im Array an der Richtigen Stelle die Farbe in Form von 0(aus), 1(farb1)...usw
+function onMIDIMessage(event) {
+    switch (event.data[0]) {
+        case 144:
+            // Feld- und Farberkennung und schreiben ins Array
+            felder[event.data[1]] = event.data[2];
+            break;
+    }
 }
 
 // Audiosound laden
