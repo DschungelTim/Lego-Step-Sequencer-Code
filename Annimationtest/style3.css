@@ -103,7 +103,7 @@ div:hover{
 }
 
 .box1 {
-    animation: color-me-in 2s; 
+    animation: color-me-in 4.5s; 
     animation-delay: 0.9s;
     animation-iteration-count: infinite;
     background: #cac6b6;
@@ -115,7 +115,7 @@ div:hover{
     }
 
 .box2 {
-    animation: color-me-in 2s; 
+    animation: color-me-in 4.5s; 
     animation-delay: 1.35s; 
     animation-iteration-count: infinite;
     background: #cac6b6;
@@ -127,7 +127,7 @@ div:hover{
     }
 
 .box3 {
-    animation: color-me-in 2s; 
+    animation: color-me-in 4.5s; 
     animation-delay: 1.8s;
     animation-iteration-count: infinite;
     background: #cac6b6;
