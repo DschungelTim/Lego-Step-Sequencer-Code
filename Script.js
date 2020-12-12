@@ -11,7 +11,7 @@ let eighthNoteTime = (60 / tempo) / 2;
 // Array für Felderkennung, 32 Felder wobei 0 aus ist und 1-4 verschiedene Farben
 // 0 = aus, 1 = red, 2 = green, 3 = blue, 4 = orange
 // Die Reihenfolge ist wie folgt: [1.Zeile1.Spalte, 2.Zeile1.Spalte, 3.Zeile1.Spalte, 4.Zeile1.Spalte, 1.Zeile2.Spalte, usw...]
-let felder = [2, 1, 3, 2, 0, 0, 0, 3, 0, 3, 0, 2, 0, 3, 0, 0, 0, 3, 0, 0, 0, 1, 0, 2, 0, 3, 0, 0, 2, 0, 0, 0];
+let felder = [1, 4, 0, 0, 2, 0, 0, 3, 1, 0, 0, 0, 0, 0, 0, 0, 1, 4, 0, 0, 0, 0, 4, 0, 0, 0, 0, 3, 4, 0, 0, 3];
 
 
 // MIDI Initialisieren
@@ -63,7 +63,7 @@ function changeColor() {
 }
 
 // Audiosound laden
-for (let i = 0; i < 4; i++)
+for (let i = 0; i < 5; i++)
     getAudioData(i);
 
 function getAudioData(i) {
