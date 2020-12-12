@@ -6,9 +6,11 @@ html, body {
     text-align: center;
 }
 
-#Startbutton {
+#startButton {
     height: 5%;
     width: 10%;
+    background-color: rgb(138, 138, 138);
+    border: none;
     font-size: 40px;
     position: relative;
     position: middle;

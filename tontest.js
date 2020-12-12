@@ -1,4 +1,3 @@
-
 let context = new AudioContext();
 
 var element = document.getElementById('B1_2'),
