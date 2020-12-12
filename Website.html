@@ -9,77 +9,77 @@
         <button id="Startbutton" class="button">Start</button>
         <br>
         
-        <div id="Sequencer">  
-          <div id="one"> 
-            <div id = "1/1" class = "Feld Spur1">1/1</div>
-            <div id = "2/1" class = "Feld Spur2">2/1</div>
-            <div id = "3/1" class = "Feld Spur3">3/1</div>
-            <div id = "4/1" class = "Feld Spur4">4/1</div>
+        <div id="Sequencer" class = "Grundelement" >
+          <div id="one" class = "slot"> 
+            <div id = "B1_1" class = "Feld Spur1">1/1</div>
+            <div id = "B2_1" class = "Feld Spur2">2/1</div>
+            <div id = "B3_1" class = "Feld Spur3">3/1</div>
+            <div id = "B4_1" class = "Feld Spur4">4/1</div>
           </div>
 
-          <div id="two"> 
-            <div id = "1/2" class = "Feld Spur1">1/2</div>
-            <div id = "2/2" class = "Feld Spur2">2/2</div>
-            <div id = "3/2" class = "Feld Spur3">3/2</div>
-            <div id = "4/2" class = "Feld Spur4">4/2</div>
+          <div id="two" class = "slot"> 
+            <div id = "B1_2" class = "Feld Spur1">1/2</div>
+            <div id = "B2_2" class = "Feld Spur2">2/2</div>
+            <div id = "B3_2" class = "Feld Spur3">3/2</div>
+            <div id = "B4_2" class = "Feld Spur4">4/2</div>
           </div>
 
-          <div id="three"> 
+          <div id="three" class = "slot"> 
             <div id = "1/3" class = "Feld Spur1">1/3</div>
             <div id = "2/3" class = "Feld Spur2">2/3</div>
             <div id = "3/3" class = "Feld Spur3">3/3</div>
             <div id = "4/3" class = "Feld Spur4">4/3</div>
           </div>
 
-          <div id="four"></div> 
+          <div id="four" class = "slot">
             <div id = "1/4" class = "Feld Spur1">1/4</div>
             <div id = "2/4" class = "Feld Spur2">2/4</div>
             <div id = "3/4" class = "Feld Spur3">3/4</div>
             <div id = "4/4" class = "Feld Spur4">4/4</div>
           </div>
 
-          <div id="five">
+          <div id="five" class = "slot">
             <div id = "1/5" class = "Feld Spur1">1/5</div>
             <div id = "2/5" class = "Feld Spur2">2/5</div>
             <div id = "3/5" class = "Feld Spur3">3/5</div>
             <div id = "4/5" class = "Feld Spur4">4/5</div>
           </div>
 
-          <div id="six"></div>
+          <div id="six" class = "slot">
             <div id = "1/6" class = "Feld Spur1">1/6</div>
             <div id = "2/6" class = "Feld Spur2">2/6</div>
             <div id = "3/6" class = "Feld Spur3">3/6</div>
             <div id = "4/6" class = "Feld Spur4">4/6</div>
           </div>
 
-          <div id="seven"></div> 
+          <div id="seven" class = "slot">
             <div id = "1/7" class = "Feld Spur1">1/7</div>
             <div id = "2/7" class = "Feld Spur2">2/7</div>
             <div id = "3/7" class = "Feld Spur3">3/7</div>
             <div id = "4/7" class = "Feld Spur4">4/7</div>
           </div>
         
-          <div id="eight">
+          <div id="eight" class = "slot">
             <div id = "1/8" class = "Feld Spur1">1/8</div>
             <div id = "2/8" class = "Feld Spur2">2/8</div>
             <div id = "3/8" class = "Feld Spur3">3/8</div>
             <div id = "4/8" class = "Feld Spur4">4/8</div>
           </div>
-
         </div>
 
-        <div class="slidecontainer">
-            <div id = "Gainslider" class = "Sliderschrift" > Gainslider </div>
-            <input type="range" min="1" max="100" value="50" class="slider" id="Gain">
-            <div id = Gainvalue class = "Sliderschrift"> 0dB </div>
-        </div>
+        <div class = "Grundelement" >
+          <div class="slidecontainer">
+              <div id = "Gainslider" class = "Sliderschrift" > Gainslider </div>
+              <input type="range" min="1" max="100" value="50" class="slider" id="Gain">
+              <div id = Gainvalue class = "Sliderschrift"> 0dB </div>
+          </div>
 
-        <div class="slidecontainer">
-            <div id = Speedslider class = Sliderschrift> Speedslider </div>
-          <input type="range" min="1" max="100" value="50" class="slider" id="Speed">
-          <div id = Speedvalue class = Sliderschrift> 90 bpm </div>
+          <div class="slidecontainer">
+              <div id = Speedslider class = Sliderschrift> Speedslider </div>
+            <input type="range" min="1" max="100" value="50" class="slider" id="Speed">
+            <div id = Speedvalue class = Sliderschrift> 90 bpm </div>
+          </div>
         </div>
-
 
         <script src="Script.js"></script>
         <script src="Midi.js"></script>
