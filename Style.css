@@ -7,13 +7,19 @@ html, body {
 }
 
 #startButton {
-    height: 5%;
-    width: 10%;
+    
     background-color: rgb(138, 138, 138);
     border: none;
+    padding: 1%;
+    
     font-size: 40px;
     position: relative;
     position: middle;
+    margin: 1%;
+}
+
+#startButton:hover {
+    opacity: 0.7;
 }
 
 .Grundelement {
@@ -46,6 +52,12 @@ html, body {
 .slot {
     float: left;  
     margin: 0.2%;
+    
+}
+
+#three {
+    animation: opacityChange 2s;
+    animation-iteration-count: infinite;
 }
 
 
@@ -62,3 +74,20 @@ html, body {
     height: 25%;
     float: left;
 }
+
+@keyframes opacityChange {       
+    0% {
+        opacity: 1;
+        
+    }
+       
+    50% {
+        opacity:0.7;
+        
+    }
+      
+    100% {
+        opacity:1;
+        
+    }
+    }
