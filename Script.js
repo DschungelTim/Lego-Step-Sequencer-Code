@@ -1,8 +1,11 @@
 let context = new AudioContext();
-isPlaying = false;
+isPlaying = true;
 
 // leeres Array für Sounds
 var audioBuffers = [];
+
+let tempo = 90; // BPM (beats per minute)
+let eighthNoteTime = (60 / tempo) / 2;
 
 // Array für Felderkennung, 32 Felder wobei 0 aus ist und 1-4 verschiedene Farben
 let felder = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
@@ -55,14 +58,12 @@ function playSound(buffer, time) {
 }
 
 function playBeat() {
-    let tempo = 90; // BPM (beats per minute)
-    let eighthNoteTime = (60 / tempo) / 2;
     let startTime = context.currentTime;
     let bassdrum = audioBuffers[0];
     let snaredrum = audioBuffers[1];
     let hihat = audioBuffers[2];
 
-    for (let takt = 0; takt < 2; takt++) {
+    for (let takt = 0; takt < 1; takt++) {
         let time = startTime + (takt * 8 * eighthNoteTime);
 
         playSound(bassdrum, time + 0 * eighthNoteTime);
@@ -78,18 +79,23 @@ function playBeat() {
             playSound(hihat, time + j * eighthNoteTime);
         }
     }
+
 }
 
-/*
-if (isPlaying) {
+setInterval(function() {
     playBeat();
-}
-*/
+}, eighthNoteTime*8*1000);
+
+
+
+/*
 document.querySelector("#startButton").addEventListener("click", function(e) {
     playBeat();
 });
 
-/*
+
+
+
 startButton.addEventListener("click", function (e) {
     if (isPlaying) {
         startButton.innerHTML = "Start";
@@ -98,5 +104,4 @@ startButton.addEventListener("click", function (e) {
     }
     isPlaying = !isPlaying;
 });
-
 */
