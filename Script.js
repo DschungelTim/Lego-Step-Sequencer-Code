@@ -10,12 +10,13 @@ let eighthNoteTime = (60 / tempo) / 2;
 
 // Array für Felderkennung, 32 Felder wobei 0 aus ist und 1-4 verschiedene Farben
 // 0 = aus, 1 = red, 2 = green, 3 = blue, 4 = orange
-let felder = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+// Die Reihenfolge ist wie folgt: [1.Zeile1.Spalte, 2.Zeile1.Spalte, 3.Zeile1.Spalte, 4.Zeile1.Spalte, 1.Zeile2.Spalte, usw...]
+let felder = [2, 1, 3, 2, 0, 0, 0, 3, 0, 3, 0, 2, 0, 3, 0, 0, 0, 3, 0, 0, 0, 1, 0, 2, 0, 3, 0, 0, 2, 0, 0, 0];
 
 
 // MIDI Initialisieren
 if (navigator.requestMIDIAccess) {
-    navigator.requestMIDIAccess({sysex: false}).then(function (midiAccess) {
+    navigator.requestMIDIAccess({ sysex: false }).then(function (midiAccess) {
         midi = midiAccess;
         var inputs = midi.inputs.values();
         // loop through all inputs
@@ -39,24 +40,24 @@ function onMIDIMessage(event) {
 }
 
 
-// Change color based on Array
-function changeColor(){
+// Change backgroundColor of the div Elements in the css-file based on Array input
+function changeColor() {
     var i;
-    for (i = 0; i < 32; i++){
-        if (felder[i] == 0){
-            document.getElementById("B"+i).style.backgroundColor = "rgb(138, 138, 138)";
+    for (i = 0; i < 32; i++) {
+        if (felder[i] == 0) {
+            document.getElementById("B" + i).style.backgroundColor = "rgb(138, 138, 138)";
         }
-        if (felder[i] == 1){
-            document.getElementById("B"+i).style.backgroundColor = "red";
+        else if (felder[i] == 1) {
+            document.getElementById("B" + i).style.backgroundColor = "red";
         }
-        if (felder[i] == 2){
-            document.getElementById("B"+i).style.backgroundColor = "green";
+        else if (felder[i] == 2) {
+            document.getElementById("B" + i).style.backgroundColor = "green";
         }
-        if (felder[i] == 3){
-            document.getElementById("B"+i).style.backgroundColor = "blue";
+        else if (felder[i] == 3) {
+            document.getElementById("B" + i).style.backgroundColor = "blue";
         }
-        if (felder[i] == 4){
-            document.getElementById("B"+i).style.backgroundColor = "orange";
+        else if (felder[i] == 4) {
+            document.getElementById("B" + i).style.backgroundColor = "orange";
         }
     }
 }
@@ -66,13 +67,13 @@ for (let i = 0; i < 4; i++)
     getAudioData(i);
 
 function getAudioData(i) {
-    fetch("/sounds/sound" + (i + 1) + ".wav")
+    fetch("/sounds/sound" + (i) + ".wav")
         .then(response => response.arrayBuffer())
         .then(undecodedAudio => context.decodeAudioData(undecodedAudio))
         .then(audioBuffer => {
             audioBuffers[i] = audioBuffer;
-    })
-    .catch(console.error);
+        })
+        .catch(console.error);
 }
 
 // Funktion um einen Sound zu bestimmten Zeitpunkt abzuspielen
@@ -83,50 +84,69 @@ function playSound(buffer, time) {
     source.start(time);
 }
 
-function playBeat() {
-    let startTime = context.currentTime;
-    let bassdrum = audioBuffers[0];
-    let snaredrum = audioBuffers[1];
-    let clap = audioBuffers[2];
-    let hihat = audioBuffers[3];
+// Funktion, welche an einer bestimmten Spalte, Zeile nachschaut welche Farbe vorhanden ist und daraufhin
+// den ensprechenden Sound zurückgibt
+function whichSound(Spalte, Zeile) {
 
-    for (let takt = 0; takt < 1; takt++) {
-        let time = startTime + (takt * 8 * eighthNoteTime);
-
-        playSound(bassdrum, time + 0 * eighthNoteTime);
-        playSound(bassdrum, time + 1 * eighthNoteTime);
-        playSound(bassdrum, time + 4 * eighthNoteTime);
-
-        playSound(snaredrum, time + 2 * eighthNoteTime);
-        playSound(snaredrum, time + 3.5 * eighthNoteTime);
-        playSound(snaredrum, time + 4.5 * eighthNoteTime);
-        playSound(snaredrum, time + 6 * eighthNoteTime);
-
-        for (let j = 0; j < 8; j++) {
-            playSound(hihat, time + j * eighthNoteTime);
-        }
+    var element = document.getElementById('B' + (Spalte + Zeile)),
+        style = window.getComputedStyle(element),
+        color = style.getPropertyValue('background-color');
+    
+    if (color === "rgb(138, 138, 138)") {
+        return audioBuffers[0];
     }
-
+    else if (color === "rgb(255, 0, 0)") {
+        return audioBuffers[1];
+    }
+    else if (color === "rgb(0, 128, 0)") {
+        return audioBuffers[2];
+    }
+    else if (color === "rgb(0, 0, 255)") {
+        return audioBuffers[3];
+    }
+    else if (color === "rgb(255, 165, 0)") {
+        return audioBuffers[4];
+    }
 }
 
-setInterval(function() {
+// Funktion, welche durch setInterval unten alle 90 bpm wiederholt wird.
+// Sie geht in der ersten for-Schleife jede Spalte und in der zweiten for-Schleife jede Zeile der Spalte durch.
+// Alle Sounds, je nach Farbe bestimmt durch whichSound(), werden pro Spalte gleichzeitig abgespielt.
+// "eight" ist für den Abspielzeitpunkt, also in welchem achtel eines Takes wir uns befinden zuständig
+function playBeat() {
+    let startTime = context.currentTime;
+    let eight = 0;
+    for (let i = 0; i < 32; i = i+4) {
+        
+        for (let j = 0; j < 4; j++) {
+            //console.log(i, j)
+            playSound(whichSound(i, j), startTime + eight * eighthNoteTime);
+        }
+        
+        eight = eight + 1;
+        if (eight == 8) {
+            eight = 0;
+        }
+        
+    }
+}
+
+// Hier wird playBeat() alle 90 bpm ausgeführt
+setInterval(function () {
     playBeat();
-}, eighthNoteTime*8*1000);
-
-setInterval(function() {
-    changeColor();
-}, 1000);
+}, eighthNoteTime * 8 * 1000);
 
 
 
-/*
+// Die sollte dann immer aufgerufen werden, wenn eine MIDI Note kommt, oder ein div angeklickt wird
+// Hiermit wird vorerst die changeColor() Funktion aufgerufen
+// WICHTIG: Nur ein setInterval pro js wahrscheinlich möglich (nicht 100% sicher)
 document.querySelector("#startButton").addEventListener("click", function(e) {
-    playBeat();
+    changeColor();
 });
 
 
-
-
+/*
 startButton.addEventListener("click", function (e) {
     if (isPlaying) {
         startButton.innerHTML = "Start";
