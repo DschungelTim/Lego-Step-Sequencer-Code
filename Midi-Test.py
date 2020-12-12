@@ -2,7 +2,6 @@ import rtmidi
 import mido
 import cv2
 
-#Test für eben gerade
 # Midi Ports suchen
 print("MIDI output ports: ", mido.get_output_names())
 midiOutput = mido.open_output("Microsoft GS Wavetable Synth 0")
