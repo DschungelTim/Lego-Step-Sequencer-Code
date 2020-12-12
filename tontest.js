@@ -1,6 +1,6 @@
 let context = new AudioContext();
 
-var element = document.getElementById('B1_2'),
+var element = document.getElementById('B4'),
     style = window.getComputedStyle(element),
     color = style.getPropertyValue('background-color');
     document.write (color);

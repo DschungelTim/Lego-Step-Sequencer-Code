@@ -4,11 +4,14 @@ isPlaying = true;
 // leeres Array für Sounds
 var audioBuffers = [];
 
+// setTime, bpm
 let tempo = 90; // BPM (beats per minute)
 let eighthNoteTime = (60 / tempo) / 2;
 
 // Array für Felderkennung, 32 Felder wobei 0 aus ist und 1-4 verschiedene Farben
+// 0 = aus, 1 = red, 2 = green, 3 = blue, 4 = orange
 let felder = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+
 
 // MIDI Initialisieren
 if (navigator.requestMIDIAccess) {
@@ -35,8 +38,31 @@ function onMIDIMessage(event) {
     }
 }
 
+
+// Change color based on Array
+function changeColor(){
+    var i;
+    for (i = 0; i < 32; i++){
+        if (felder[i] == 0){
+            document.getElementById("B"+i).style.backgroundColor = "rgb(138, 138, 138)";
+        }
+        if (felder[i] == 1){
+            document.getElementById("B"+i).style.backgroundColor = "red";
+        }
+        if (felder[i] == 2){
+            document.getElementById("B"+i).style.backgroundColor = "green";
+        }
+        if (felder[i] == 3){
+            document.getElementById("B"+i).style.backgroundColor = "blue";
+        }
+        if (felder[i] == 4){
+            document.getElementById("B"+i).style.backgroundColor = "orange";
+        }
+    }
+}
+
 // Audiosound laden
-for (let i = 0; i < 3; i++)
+for (let i = 0; i < 4; i++)
     getAudioData(i);
 
 function getAudioData(i) {
@@ -61,7 +87,8 @@ function playBeat() {
     let startTime = context.currentTime;
     let bassdrum = audioBuffers[0];
     let snaredrum = audioBuffers[1];
-    let hihat = audioBuffers[2];
+    let clap = audioBuffers[2];
+    let hihat = audioBuffers[3];
 
     for (let takt = 0; takt < 1; takt++) {
         let time = startTime + (takt * 8 * eighthNoteTime);
@@ -85,6 +112,10 @@ function playBeat() {
 setInterval(function() {
     playBeat();
 }, eighthNoteTime*8*1000);
+
+setInterval(function() {
+    changeColor();
+}, 1000);
 
 
 
