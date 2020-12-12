@@ -9,8 +9,7 @@ midiOutput = mido.open_output("LoopBe Internal MIDI 1")
 def sendMidiNote(note, velocity):
 	message = mido.Message('note_on', note=note, velocity=velocity)
 	midiOutput.send(message)
-
-
+	
 for value in range(128):
-	sendMidiNote(7, value)
+	sendMidiNote(7, 1)
 	cv2.waitKey(500)

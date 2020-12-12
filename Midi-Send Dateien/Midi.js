@@ -21,19 +21,14 @@ function onMIDIMessage(event) {
     switch (event.data[0]) {
     case 144:
         // your function startNote(note, velocity)
-        startNote(event.data[1], event.data[2]);
+        //startNote(event.data[1], event.data[2]);
+        document.querySelector("#data1").innerHTML = event.data[1];
+        document.querySelector("#data2").innerHTML = event.data[2];
         break;
     case 128:
         // your function stopNote(note, velocity)
-        stopNote(event.data[1], event.data[2]);
-        break;
-    case 176:
-        // your function controlChange(controllerNr, value)
-        controlChange(event.data[1], event.data[2]);
-        break;
-    case 224:
-        // your function pitchBend(LSB, HSB)
-        pitchBend(event.data[1], event.data[2]);
+        document.querySelector("#data3").innerHTML = event.data[1];
+        document.querySelector("#data4").innerHTML = event.data[2];
         break;
     }
 }
