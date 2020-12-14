@@ -1,6 +1,7 @@
 html, body {
     height: 100%;
     width: 100%;
+    background:  #171718;
     padding: 0;
     margin: 0;
     text-align: center;
@@ -8,42 +9,44 @@ html, body {
 
 #startButton {
     
-    background-color: rgb(138, 138, 138);
+    background-color: #b4b2aa;
     border: none;
-    padding: 1%;
-    
+    padding: 1.5%;
     font-size: 40px;
-    position: relative;
     position: middle;
-    margin: 1%;
+    margin-top: 4%;
+    
 }
 
 #startButton:hover {
     opacity: 0.7;
 }
 
-.Grundelement {
-    float: left;
-    width: 50%;
-    box-sizing: border-box;
+#Sequencer {
+    width: 70%;
+    position: middle;
+    margin-left: 15%;
+    margin-top: 2%;
 }
 
 .Feld {
-    width: 100%;
-    height: 100%;
-    float: left;
+    /*hier in color sind die Zahlen versteckt */
+    color:  #b4b2aa;
+    width: 90px;
+    height: 90px;
+    float: both;
     border: none;
-    margin: 2%;
-    padding-top: 40%;
-    padding-bottom: 40%;
-    background-color: rgb(138, 138, 138);
+    margin: 4%;
+    padding-top: 0;
+    padding-bottom:0 ;
+    background-color: #b4b2aa;
 
 }
-/* testbutton Farben */
+/* testbutton Farben 
 #B4 {
     background-color: rgb(138, 138, 138);
     
-}
+}*/
 
 .Feld:hover{
     opacity: 70%;
@@ -55,24 +58,50 @@ html, body {
     
 }
 
-#three {
+/*#three {
     animation: opacityChange 2s;
     animation-iteration-count: infinite;
-}
+}*/
 
 
 .slider {
     -webkit-appearance: slider-vertical;
     height: 70%;
+    position: middle;
+    width: 25px;
+    background:  #0e0e0d;
+    outline: none;
+    opacity: 0.7;
+    
 }
+
+/*.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    transform: rotate(90deg);
+    appearance: vertical;
+    width: 15px;
+    height: 15px;
+    background: #cac6b6;
+    cursor: pointer;
+    opacity: 1;
+}*/
+
 
 .Sliderschrift {
     font-size: 20px;
+    margin: 10%;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color:  #171718;
+    font-weight: 500;
 }
 
-.slidecontainer {
-    height: 25%;
+.slide {
+    height: 41.7%;
+    width: 7%;
     float: left;
+    background-color: #b4b2aa;
+    margin: 0.35%;
+    margin-left: 2%;
 }
 
 @keyframes opacityChange {       
