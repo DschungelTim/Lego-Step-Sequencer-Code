@@ -133,7 +133,9 @@ function playBeat() {
 
 // Hier wird playBeat() alle 90 bpm ausgeführt
 setInterval(function () {
-    playBeat();
+    if (isPlaying){
+        playBeat();
+    }
 }, eighthNoteTime * 8 * 1000);
 
 
@@ -146,7 +148,7 @@ document.querySelector("#startButton").addEventListener("click", function(e) {
 });
 
 
-/*
+
 startButton.addEventListener("click", function (e) {
     if (isPlaying) {
         startButton.innerHTML = "Start";
@@ -155,4 +157,3 @@ startButton.addEventListener("click", function (e) {
     }
     isPlaying = !isPlaying;
 });
-*/

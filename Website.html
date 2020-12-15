@@ -6,10 +6,10 @@
     </head>
     <body>
  
-        <button id="startButton" class="button">START</button>
+        <button id="startButton" class="button">STOP</button>
         <br>
         
-        <div id="Sequencer" class = "Grundelement" >
+        <div id="Sequencer" class = "Sequencer Container" >
           <div id="one" class = "slot"> 
             <div id = "B0" class = "Feld Spur1">0</div>
             <div id = "B1" class = "Feld Spur2">1</div>
@@ -67,19 +67,19 @@
           </div>
         </div>
 
-        <div class = "Grundelement" >
-          <div class="slidecontainer">
-              <div id = "Gainslider" class = "Sliderschrift" > Gainslider </div>
-              <input type="range" min="1" max="100" value="50" class="slider" id="Gain">
-              <div id = Gainvalue class = "Sliderschrift"> 0dB </div>
-          </div>
+        
+        <div class="slide Container">
+            <div id = "Gainslider" class = "Sliderschrift" > GAIN </div>
+            <input type="range" min="1" max="100" value="50" class="slider" id="Gain">
+            <div id = Gainvalue class = "Sliderschrift"> 0dB </div>
+        </div>
 
-          <div class="slidecontainer">
-              <div id = Speedslider class = Sliderschrift> Speedslider </div>
+        <div class="slide Container">
+            <div id = Speedslider class = Sliderschrift> SPEED </div>
             <input type="range" min="1" max="100" value="50" class="slider" id="Speed">
             <div id = Speedvalue class = Sliderschrift> 90 bpm </div>
-          </div>
         </div>
+        
 
         <!--<script src="tontest.js"></script>-->
         <script src="Script.js"></script>
