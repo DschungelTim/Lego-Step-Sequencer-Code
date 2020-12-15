@@ -15,7 +15,7 @@ let felder = [1, 4, 0, 0, 2, 0, 0, 3, 1, 0, 0, 0, 0, 0, 0, 0, 1, 4, 0, 0, 0, 0, 
 
 //Farbvariablen
 rot = getComputedStyle(document.documentElement).getPropertyValue('--rot');
-grün = getComputedStyle(document.documentElement).getPropertyValue('--gruen');
+gruen = getComputedStyle(document.documentElement).getPropertyValue('--gruen');
 gelb = getComputedStyle(document.documentElement).getPropertyValue('--gelb');
 blau = getComputedStyle(document.documentElement).getPropertyValue('--blau');
 background = getComputedStyle(document.documentElement).getPropertyValue('--vordergrund');
@@ -51,19 +51,19 @@ function changeColor() {
     var i;
     for (i = 0; i < 32; i++) {
         if (felder[i] == 0) {
-            document.getElementById("B" + i).style.backgroundColor = "rgb(138, 138, 138)";
+            document.getElementById("B" + i).style.backgroundColor = background;
         }
         else if (felder[i] == 1) {
-            document.getElementById("B" + i).style.backgroundColor = "red";
+            document.getElementById("B" + i).style.backgroundColor = rot;
         }
         else if (felder[i] == 2) {
-            document.getElementById("B" + i).style.backgroundColor = "green";
+            document.getElementById("B" + i).style.backgroundColor = gruen;
         }
         else if (felder[i] == 3) {
-            document.getElementById("B" + i).style.backgroundColor = "blue";
+            document.getElementById("B" + i).style.backgroundColor = blau;
         }
         else if (felder[i] == 4) {
-            document.getElementById("B" + i).style.backgroundColor = "orange";
+            document.getElementById("B" + i).style.backgroundColor = gelb;
         }
     }
 }
@@ -98,19 +98,20 @@ function whichSound(Spalte, Zeile) {
         style = window.getComputedStyle(element),
         color = style.getPropertyValue('background-color');
     
-    if (color === "rgb(138, 138, 138)") {
+    if (color === background) {
         return audioBuffers[0];
     }
-    else if (color === "rgb(255, 0, 0)") {
+    else if (color === rot) {
         return audioBuffers[1];
+        console.log("test");
     }
-    else if (color === "rgb(0, 128, 0)") {
+    else if (color === gruen) {
         return audioBuffers[2];
     }
-    else if (color === "rgb(0, 0, 255)") {
+    else if (color === blau) {
         return audioBuffers[3];
     }
-    else if (color === "rgb(255, 165, 0)") {
+    else if (color === gelb) {
         return audioBuffers[4];
     }
 }
@@ -157,9 +158,9 @@ document.querySelector("#startButton").addEventListener("click", function(e) {
 
 startButton.addEventListener("click", function (e) {
     if (isPlaying) {
-        startButton.innerHTML = "Start";
+        startButton.innerHTML = "START";
     } else {
-        startButton.innerHTML = "Stop";
+        startButton.innerHTML = "STOP";
     }
     isPlaying = !isPlaying;
 });
