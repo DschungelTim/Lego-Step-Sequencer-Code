@@ -13,6 +13,12 @@ let eighthNoteTime = (60 / tempo) / 2;
 // Die Reihenfolge ist wie folgt: [1.Zeile1.Spalte, 2.Zeile1.Spalte, 3.Zeile1.Spalte, 4.Zeile1.Spalte, 1.Zeile2.Spalte, usw...]
 let felder = [1, 4, 0, 0, 2, 0, 0, 3, 1, 0, 0, 0, 0, 0, 0, 0, 1, 4, 0, 0, 0, 0, 4, 0, 0, 0, 0, 3, 4, 0, 0, 3];
 
+//Farbvariablen
+rot = getComputedStyle(document.documentElement).getPropertyValue('--rot');
+grün = getComputedStyle(document.documentElement).getPropertyValue('--gruen');
+gelb = getComputedStyle(document.documentElement).getPropertyValue('--gelb');
+blau = getComputedStyle(document.documentElement).getPropertyValue('--blau');
+background = getComputedStyle(document.documentElement).getPropertyValue('--vordergrund');
 
 // MIDI Initialisieren
 if (navigator.requestMIDIAccess) {
