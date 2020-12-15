@@ -78,6 +78,7 @@ html, body {
 
 .slider {
     -webkit-appearance: slider-vertical;
+    
     height: 70%;
     position: middle;
     width: 25px;
@@ -88,9 +89,9 @@ html, body {
 }
 
 /*.slider::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    transform: rotate(90deg);
-    appearance: vertical;
+    -webkit-appearance: thumb-vertical;
+    
+    appearance: none;
     width: 15px;
     height: 15px;
     background: #cac6b6;

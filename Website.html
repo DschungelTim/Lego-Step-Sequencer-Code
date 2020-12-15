@@ -9,10 +9,10 @@
         <button id="startButton" class="button">STOP</button>
         <br>
         <div id="Legende">LEGENDE
-          <div id= "rot"   class= "Farbraum">SNARE</div>
-          <div id= "gelb"  class= "Farbraum">SNARE</div>
+          <div id= "rot"   class= "Farbraum">BASE</div>
+          <div id= "gelb"  class= "Farbraum">HIHAT</div>
           <div id= "gruen" class=  "Farbraum">SNARE</div>
-          <div id= "blau" class=  "Farbraum">SNARE</div>
+          <div id= "blau" class=  "Farbraum">CLAP</div>
         </div>
 
         <div id="Sequencer" class = "Sequencer Container" >
@@ -76,19 +76,19 @@
         
         <div class="slide Container">
             <div id = "Gainslider" class = "Sliderschrift" > GAIN </div>
-            <input type="range" min="1" max="100" value="50" class="slider" id="Gain">
+            <input type="range" orient="vertical" min="1" max="100" value="50" class="slider" id="Gain">
             <div id = Gainvalue class = "Sliderschrift"> 0dB </div>
         </div>
 
         <div class="slide Container">
             <div id = Speedslider class = Sliderschrift> SPEED </div>
-            <input type="range" min="1" max="100" value="50" class="slider" id="Speed">
+            <input type="range" orient="vertical" min="1" max="100" value="50" class="slider" id="Speed">
             <div id = Speedvalue class = Sliderschrift> 90 bpm </div>
         </div>
         
-        
+        <script src="clicktest.js"></script>
         <!--<script src="tontest.js"></script>-->
-        <script src="Script.js"></script>
+        <!--script src="Script.js"></script-->
         <!--<script src="Midi.js"></script>-->
     </body>
 </html>
