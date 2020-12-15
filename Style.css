@@ -1,15 +1,27 @@
+:root {
+    --hintergrund:  #171718;
+    --hintergrund2:  #262627 ; 
+    --vordergrund:  #b4b2aa;
+    --vordergrund2: ;
+    --rot:  #9b3e2e;
+    --gelb:  #a58f2f;
+    --grün:  #407019;
+    --blau:  #214b81;
+    --font: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
 html, body {
     height: 100%;
     width: 100%;
-    background:  #171718;
+    background: var(--hintergrund);
     padding: 0;
     margin: 0;
     text-align: center;
 }
 
 #startButton {
-    
-    background-color: #b4b2aa;
+    font-family: var(--font);
+    background-color:var(--vordergrund);
     border: none;
     padding: 1.5%;
     font-size: 40px;
@@ -31,7 +43,7 @@ html, body {
 
 .Feld {
     /*hier in color sind die Zahlen versteckt */
-    color:  #b4b2aa;
+    color: var(--vordergrund);
     width: 90px;
     height: 90px;
     float: both;
@@ -39,7 +51,7 @@ html, body {
     margin: 4%;
     padding-top: 0;
     padding-bottom:0 ;
-    background-color: #b4b2aa;
+    background-color:var(--vordergrund);
 
 }
 /* testbutton Farben 
@@ -69,7 +81,7 @@ html, body {
     height: 70%;
     position: middle;
     width: 25px;
-    background:  #0e0e0d;
+    background: var(--hintergrund);
     outline: none;
     opacity: 0.7;
     
@@ -90,8 +102,8 @@ html, body {
 .Sliderschrift {
     font-size: 20px;
     margin: 10%;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    color:  #171718;
+    font-family: var(--font);
+    color: var(--hintergrund);
     font-weight: 500;
 }
 
@@ -99,7 +111,7 @@ html, body {
     height: 41.7%;
     width: 7%;
     float: left;
-    background-color: #b4b2aa;
+    background-color:var(--vordergrund);
     margin: 0.35%;
     margin-left: 2%;
 }
@@ -120,3 +132,15 @@ html, body {
         
     }
     }
+
+#Legende {
+    background-color: var(--hintergrund2);
+    font-family: var(--font);
+    color: var(--vordergrund);
+    width: 15%;
+    float: left;
+    margin-top: ;
+    height: 41.8%;
+    margin: 2.3%;
+    padding-top: 2%;
+}
