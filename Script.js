@@ -90,6 +90,18 @@ function playSound(buffer, time) {
     source.start(time);
 }
 
+function convertToHex(str){
+    var raw = str.match(/(\d+)/g);
+    var hexr = parseInt(raw[0]).toString(16);
+    var hexg = parseInt(raw[1]).toString(16);
+    var hexb = parseInt(raw[2]).toString(16);
+        hexr = hexr.value == 1 ? '0' + hexr: hexr;
+        hexg = hexg.length == 1 ? '0' + hexg: hexg;
+        hexb = hexb.length == 1 ? '0' + hexb: hexb;
+    var hex = '#' + hexr + hexg + hexb;
+    return hex;
+  }
+
 // Funktion, welche an einer bestimmten Spalte, Zeile nachschaut welche Farbe vorhanden ist und daraufhin
 // den ensprechenden Sound zurückgibt
 function whichSound(Spalte, Zeile) {
@@ -97,23 +109,25 @@ function whichSound(Spalte, Zeile) {
     var element = document.getElementById('B' + (Spalte + Zeile)),
         style = window.getComputedStyle(element),
         color = style.getPropertyValue('background-color');
-    
-    if (color === background) {
+    color = convertToHex(color);
+
+    if (color.trim() === background.trim()) {
         return audioBuffers[0];
     }
-    else if (color === rot) {
+    else if (color.trim() === rot.trim()) {
         return audioBuffers[1];
-        console.log("test");
+        
     }
-    else if (color === gruen) {
+    else if (color.trim() === gruen.trim()) {
         return audioBuffers[2];
     }
-    else if (color === blau) {
+    else if (color.trim() === blau.trim()) {
         return audioBuffers[3];
     }
-    else if (color === gelb) {
+    else if (color.trim() === gelb.trim()) {
         return audioBuffers[4];
     }
+    
 }
 
 // Funktion, welche durch setInterval unten alle 90 bpm wiederholt wird.
