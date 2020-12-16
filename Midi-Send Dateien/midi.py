@@ -11,5 +11,5 @@ def sendMidiNote(note, velocity):
 	midiOutput.send(message)
 	
 for value in range(128):
-	sendMidiNote(7, 1)
-	cv2.waitKey(500)
+	sendMidiNote(33, 50)
+	cv2.waitKey(200)
