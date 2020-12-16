@@ -1,5 +1,5 @@
 let context = new AudioContext();
-isPlaying = true;
+isPlaying = false;
 
 // leeres Array für Sounds
 var audioBuffers = [];
