@@ -76,28 +76,29 @@ html, body {
 }*/
 
 
-.slider {
-    -webkit-appearance: slider-vertical;
-    
+.slider {   
     height: 70%;
     position: middle;
-    width: 25px;
-    background: var(--hintergrund);
+    width: 20px;
+    background: var(--hintergrund2);
     outline: none;
-    opacity: 0.7;
+    opacity: 1;
+    -webkit-appearance: slider-vertical;
+    /*appearance: none;*/
     
 }
 
-/*.slider::-webkit-slider-thumb {
+.slider::-webkit-slider-thumb {
     -webkit-appearance: thumb-vertical;
-    
     appearance: none;
-    width: 15px;
-    height: 15px;
-    background: #cac6b6;
-    cursor: pointer;
+    align-self: center;
+    width: 50px;
+    height: 25px;
     opacity: 1;
-}*/
+    background:var(--hintergrund);
+    cursor: pointer;
+    
+}
 
 
 .Sliderschrift {
@@ -109,7 +110,7 @@ html, body {
 }
 
 .slide {
-    height: 41.7%;
+    height: 44.5%;
     width: 7%;
     float: left;
     background-color:var(--vordergrund);
@@ -142,7 +143,7 @@ html, body {
     color: var(--vordergrund);
     width: 15%;
     float: left;
-    height: 38.5%;
+    height: 41%;
     margin: 2.3%;
     margin-left: 6%;
     padding-top: 2%;
