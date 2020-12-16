@@ -19,7 +19,7 @@ let sliders = document.getElementsByClassName("slider");
 // Array für Felderkennung, 32 Felder wobei 0 aus ist und 1-4 verschiedene Farben
 // 0 = aus, 1(basedrum) = red, 2(snaredrum) = green, 3(clap) = blue, 4(hihat) = orange
 // Die Reihenfolge ist wie folgt: [1.Zeile1.Spalte, 2.Zeile1.Spalte, 3.Zeile1.Spalte, 4.Zeile1.Spalte, 1.Zeile2.Spalte, usw...]
-// Die letzten zwei Felder sind für die Slider, Gain von 0-127=0dB-5dB und Speed von 0-127=50bpm-178bpm
+// Die letzten zwei Felder sind für die Slider, felder[32] Gain von 0-127=0dB-5dB und felder[33] Speed von 0-127=50bpm-178bpm
 let felder = [1, 4, 0, 0, 2, 0, 0, 3, 1, 0, 0, 0, 0, 0, 0, 0, 1, 4, 0, 0, 0, 0, 4, 0, 0, 0, 0, 3, 4, 0, 0, 3, 20, 30];
 
 
