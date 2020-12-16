@@ -109,7 +109,7 @@ html, body {
     font-weight: 500;
 }
 
-.slide {
+.sliderContainer {
     height: 44.5%;
     width: 7%;
     float: left;

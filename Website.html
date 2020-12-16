@@ -74,21 +74,23 @@
         </div>
 
         
-        <div class="slide Container">
-            <div id = "Gainslider" class = "Sliderschrift" > GAIN </div>
-            <input type="range" orient="vertical" min="1" max="100" value="50" class="slider" id="Gain">
-            <div id = Gainvalue class = "Sliderschrift"> 0dB </div>
+        <div class="sliderContainer">
+            <div class = "Sliderschrift" > GAIN </div>
+
+            <input type="range" orient="vertical" min="0" max="500" value="100" class="slider" id="gainSlider">
+            <div id = "gainOutput" class = "Sliderschrift"> 1 dB </div>
         </div>
 
-        <div class="slide Container">
-            <div id = Speedslider class = Sliderschrift> SPEED </div>
-            <input type="range" orient="vertical" min="1" max="100" value="50" class="slider" id="Speed">
-            <div id = Speedvalue class = Sliderschrift> 90 bpm </div>
+        <div class="sliderContainer">
+            <div class = "Sliderschrift"> SPEED </div>
+
+            <input type="range" orient="vertical" min="50" max="200" value="90" class="slider" id="speedSlider">
+            <div id = "speedOutput" class = "Sliderschrift"> 90 bpm </div>
         </div>
         
-        <script src="clicktest.js"></script>
+
         <!--<script src="tontest.js"></script>-->
-        <!--script src="Script.js"></script-->
+        <script src="Script.js"></script>
         <!--<script src="Midi.js"></script>-->
     </body>
 </html>

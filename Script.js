@@ -4,9 +4,17 @@ isPlaying = true;
 // leeres Array für Sounds
 var audioBuffers = [];
 
+// Nodes erstellen
+let gain = context.createGain();
+
 // setTime, bpm
 let tempo = 90; // BPM (beats per minute)
 let eighthNoteTime = (60 / tempo) / 2;
+// Calls timeout() function for the first time
+timeout();
+
+// Slider array initialisieren
+let sliders = document.getElementsByClassName("slider");
 
 // Array für Felderkennung, 32 Felder wobei 0 aus ist und 1-4 verschiedene Farben
 // 0 = aus, 1(basedrum) = red, 2(snaredrum) = green, 3(clap) = blue, 4(hihat) = orange
@@ -86,7 +94,8 @@ function getAudioData(i) {
 function playSound(buffer, time) {
     let source = context.createBufferSource();
     source.buffer = buffer;
-    source.connect(context.destination);
+    source.connect(gain);
+    gain.connect(context.destination);
     source.start(time);
 }
 
@@ -152,14 +161,34 @@ function playBeat() {
     }
 }
 
-// Hier wird playBeat() alle 90 bpm ausgeführt
-setInterval(function () {
-    if (isPlaying){
-        playBeat();
+// Calls our playBeat() function every eightNoteTime*8*1000 seconds
+function timeout(){
+    setTimeout(function () {
+        if (isPlaying){
+            playBeat();
+        }
+        timeout();
+    }, eighthNoteTime * 8 * 1000);
+};
+
+// Abfrage, ob Sliderwerte geändert werden
+for (var i = 0; i < sliders.length; i++) {
+    sliders[i].addEventListener("input", changeParameter, false);
+}
+
+//Änderung der Parameter
+function changeParameter() {
+    switch (this.id) {
+        case "gainSlider":
+            gain.gain.value = (this.value/100);
+            document.querySelector("#gainOutput").innerHTML = (this.value)/100 + " dB";
+            break;
+        case "speedSlider":
+            eighthNoteTime = (60 / this.value) / 2;
+            document.querySelector("#speedOutput").innerHTML = (this.value) + " bpm";
+            break;
     }
-}, eighthNoteTime * 8 * 1000);
-
-
+}
 
 // Die sollte dann immer aufgerufen werden, wenn eine MIDI Note kommt, oder ein div angeklickt wird
 // Hiermit wird vorerst die changeColor() Funktion aufgerufen
