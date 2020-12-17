@@ -231,7 +231,7 @@ document.querySelector("#startButton").addEventListener("click", function(e) {
 });
 
 
-
+// Functionallity for the StartStop Button
 startButton.addEventListener("click", function (e) {
     if (isPlaying) {
         startButton.innerHTML = "START";
