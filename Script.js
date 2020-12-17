@@ -4,14 +4,16 @@ isPlaying = false;
 // leeres Array für Sounds
 var audioBuffers = [];
 
+// Variable for cancelling timeOut()
+var loopTout;
+
 // Nodes erstellen
 let gain = context.createGain();
 
 // setTime, bpm
 let tempo = 90; // BPM (beats per minute)
 let eighthNoteTime = (60 / tempo) / 2;
-// Calls timeout() function for the first time
-timeout();
+
 
 // Slider array initialisieren
 let sliders = document.getElementsByClassName("slider");
@@ -167,13 +169,23 @@ function playBeat() {
     }
 }
 
-// Calls our playBeat() function every eightNoteTime*8*1000 seconds
-function timeout(){
+// Gets called when we press Start and forewards to the loopTimeout()
+function startTimeout(){
     setTimeout(function () {
         if (isPlaying){
             playBeat();
         }
-        timeout();
+        loopTimeout();
+    }, 40);
+};
+
+// Calls our playBeat() function every eightNoteTime*8*1000 seconds
+function loopTimeout(){
+    loopTout = setTimeout(function () {
+        if (isPlaying){
+            playBeat();
+        }
+        loopTimeout();
     }, eighthNoteTime * 8 * 1000);
 };
 
@@ -223,8 +235,10 @@ document.querySelector("#startButton").addEventListener("click", function(e) {
 startButton.addEventListener("click", function (e) {
     if (isPlaying) {
         startButton.innerHTML = "START";
+        clearTimeout(loopTout);
     } else {
         startButton.innerHTML = "STOP";
+        startTimeout()
     }
     isPlaying = !isPlaying;
 });
