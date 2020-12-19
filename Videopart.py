@@ -1,5 +1,10 @@
 import numpy as np
 import cv2
+import rtmidi
+import mido
+
+# Midi Port
+midiOutput = mido.open_output("LoopBe Internal MIDI 1")
 
 # Wertebereich Hue: 0-180, Sat: 0-255
 # [Hue_min, Hue_max, Sat_min, Sat_max]
@@ -14,6 +19,48 @@ x0 = 0
 x1 = 0
 y0 = 0
 y1 = 0
+
+# Array für in Feldern erkannte Schwerpunkte für alle Farben
+felder_gruen = []
+felder_blau = []
+felder_rot = []
+felder_orange = []
+
+# dict für javascripfelder
+felderDict = {
+    (1, 1) : 0,
+    (2, 1) : 1,
+    (3, 1) : 2,
+    (4, 1) : 3,
+    (1, 2) : 4,
+    (2, 2) : 5,
+    (3, 2) : 6,
+    (4, 2) : 7,
+    (1, 3) : 8,
+    (2, 3) : 9,
+    (3, 3) : 10,
+    (4, 3) : 11,
+    (1, 4) : 12,
+    (2, 4) : 13,
+    (3, 4) : 14,
+    (4, 4) : 15,
+    (1, 5) : 16,
+    (2, 5) : 17,
+    (3, 5) : 18,
+    (4, 5) : 19,
+    (1, 6) : 20,
+    (2, 6) : 21,
+    (3, 6) : 22,
+    (4, 6) : 23,
+    (1, 7) : 24,
+    (2, 7) : 25,
+    (3, 7) : 26,
+    (4, 7) : 27,
+    (1, 8) : 28,
+    (2, 8) : 29,
+    (3, 8) : 30,
+    (4, 8) : 31
+}
 
 # Filtergröße Medianfilter
 kSize = 7
@@ -51,15 +98,42 @@ def Schwerpunkte(maske) :
 def PinKoord (SPunktarray) :
     dx = x1 - x0
     dy = y1 - y0
+    yxFelder = [[], []]
     for i in range(0, len(SPunktarray)) :
         Y = SPunktarray [i] [0]
         X = SPunktarray [i] [1]
         for i in range (0, 10) :
-            if (x0 + (i/10) * dx) < X < (x1 - ((9-i)/10) * dx) :
-                print (i+1)
+            if (x0 + (i/10) * dx) < X <= (x1 - ((9-i)/10) * dx) :
+                xFelder = yxFelder[1]
+                xFelder.append(i+1)      
         for i in range (0, 4) :
-            if (y0 + (i/4) * dy) < Y < (y1 -((3 - i)/4) * dy) :
-                print (i+1)
+            if (y0 + (i/4) * dy) < Y <= (y1 -((3 - i)/4) * dy) :
+                yFelder = yxFelder[0]
+                yFelder.append(i+1)
+    return yxFelder
+
+# Definiert wie eine Midi Note gesendet werden kann
+def sendMidiNote(note, velocity):
+	message = mido.Message('note_on', note=note, velocity=velocity)
+	midiOutput.send(message)
+
+# Schaut welches Array im Argument steht und sendet dann die dementsprechende Midi Note
+# Über das Wörterbuch werden die hier errechneten Werte in die vom Javascript erwarteten umgerechnet
+# Die Zahl 1-4 gibt die Farbe des Steins an
+
+# TODO: irgendwo muss noch eine Art und Weiße geschrieben werden Steine die weggenommen wurden auch aus dem Array zu entfernen
+# Aktuell werden sie nur hinzugefügt.
+
+def sendMIDI (felder):
+    for i in range(len(felder[0])):
+        if felder == felder_blau:
+            sendMidiNote(felderDict[(felder[0][i], felder[1][i])], 3)
+        if felder == felder_rot:
+            sendMidiNote(felderDict[(felder[0][i], felder[1][i])], 1)
+        if felder == felder_gruen:
+            sendMidiNote(felderDict[(felder[0][i], felder[1][i])], 2)
+        if felder == felder_orange:
+            sendMidiNote(felderDict[(felder[0][i], felder[1][i])], 4)            
 
 # Webcam öffnen
 cap = cv2.VideoCapture(0)
@@ -98,7 +172,20 @@ while cap.isOpened():
     center_gruen = Schwerpunkte(mask_gruen)
     center_orange = Schwerpunkte(mask_orange)
 
-    PinKoord (center_rot)
+    # Funktion aufrufen, um die center_daten in 2D Array mit informationen über "aktivierte" Felder umzuwandeln
+    # Für drei rote Steine könnte dann zB. ein solches Array mit y und x Felderzahlen herauskommen:
+    #   felder_rot = [[1, 4], [1, 8]] für zwei Steine ganz oben links und ganz unten rechts.
+    # felder =[[die y-felder zahlen von 1-4], [die x-felder zahlen von 1-8]]
+    #felder_blau = PinKoord (center_blau)
+    felder_rot = PinKoord (center_rot)
+    felder_gruen = PinKoord (center_gruen)
+    felder_orange = PinKoord (center_orange)
+
+    # Ruft sendMIDI für die jeweiligen Farbarrays auf
+    #sendMIDI(felder_blau)
+    sendMIDI(felder_rot)
+    sendMIDI(felder_gruen)
+    sendMIDI(felder_orange)
 
     # Video und Masken anzeigen
     cv2.imshow("Video", frame)
