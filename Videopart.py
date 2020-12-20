@@ -25,6 +25,7 @@ felder_gruen = []
 felder_blau = []
 felder_rot = []
 felder_orange = []
+sent = []
 
 # dict für javascripfelder
 felderDict = {
@@ -112,6 +113,24 @@ def PinKoord (SPunktarray) :
                 yFelder.append(i+1)
     return yxFelder
 
+
+# Das Sent Array wird zurückgesetzt und ner mit Werten von 0 - 31 bestückt.
+# Aus dem Sent Array werden dann alle gesendeten herausgelöscht (mit pop),
+# danach wird mit den übriggebliebenen eine MidiNote mit velocity 0, also kein Stein auf dem Feld, gesendet.
+def sendMIDIContainer():
+    sent = []
+    for i in range(32):
+        sent.append(i)
+
+    # Ruft sendMIDI für die jeweiligen Farbarrays auf
+    #sendMIDI(felder_blau)
+    sendMIDI(felder_rot)
+    sendMIDI(felder_gruen)
+    sendMIDI(felder_orange)
+
+    for i in range(len(sent)):
+        sendMidiNote(sent[i], 0)
+
 # Definiert wie eine Midi Note gesendet werden kann
 def sendMidiNote(note, velocity):
 	message = mido.Message('note_on', note=note, velocity=velocity)
@@ -120,20 +139,38 @@ def sendMidiNote(note, velocity):
 # Schaut welches Array im Argument steht und sendet dann die dementsprechende Midi Note
 # Über das Wörterbuch werden die hier errechneten Werte in die vom Javascript erwarteten umgerechnet
 # Die Zahl 1-4 gibt die Farbe des Steins an
-
-# TODO: irgendwo muss noch eine Art und Weiße geschrieben werden Steine die weggenommen wurden auch aus dem Array zu entfernen
-# Aktuell werden sie nur hinzugefügt.
-
 def sendMIDI (felder):
     for i in range(len(felder[0])):
         if felder == felder_blau:
             sendMidiNote(felderDict[(felder[0][i], felder[1][i])], 3)
+            try:
+                sent.pop(felderDict[(felder[0][i], felder[1][i])])
+            except:
+                pass
+            
         if felder == felder_rot:
             sendMidiNote(felderDict[(felder[0][i], felder[1][i])], 1)
+            try:
+                sent.pop(felderDict[(felder[0][i], felder[1][i])])
+            except:
+                pass
+
         if felder == felder_gruen:
             sendMidiNote(felderDict[(felder[0][i], felder[1][i])], 2)
+            try:
+                sent.pop(felderDict[(felder[0][i], felder[1][i])])
+            except:
+                pass
+
         if felder == felder_orange:
-            sendMidiNote(felderDict[(felder[0][i], felder[1][i])], 4)            
+            sendMidiNote(felderDict[(felder[0][i], felder[1][i])], 4)    
+            try:
+                sent.pop(felderDict[(felder[0][i], felder[1][i])])
+            except:
+                pass
+
+
+
 
 # Webcam öffnen
 cap = cv2.VideoCapture(0)
@@ -181,11 +218,8 @@ while cap.isOpened():
     felder_gruen = PinKoord (center_gruen)
     felder_orange = PinKoord (center_orange)
 
-    # Ruft sendMIDI für die jeweiligen Farbarrays auf
-    #sendMIDI(felder_blau)
-    sendMIDI(felder_rot)
-    sendMIDI(felder_gruen)
-    sendMIDI(felder_orange)
+    # Hierüber werden alle Midi Sendungen geregelt
+    sendMIDIContainer()
 
     # Video und Masken anzeigen
     cv2.imshow("Video", frame)
