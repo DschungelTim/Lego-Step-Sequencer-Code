@@ -161,7 +161,42 @@ function playBeat() {
             //console.log(i, j)
             playSound(whichSound(i, j), startTime + eight * eighthNoteTime);
         }
-        
+
+        setTimeout(function(){ 
+            document.getElementById("one").style.opacity = 0.7;
+        }, (0 * eighthNoteTime));   
+        setTimeout(function(){ 
+            document.getElementById("two").style.opacity = 0.7;
+            document.getElementById("one").style.opacity = 1;
+        }, (1000 * eighthNoteTime)); 
+        setTimeout(function(){ 
+            document.getElementById("three").style.opacity = 0.7;
+            document.getElementById("two").style.opacity = 1;
+        }, (2000 * eighthNoteTime)); 
+        setTimeout(function(){ 
+            document.getElementById("four").style.opacity = 0.7;
+            document.getElementById("three").style.opacity = 1;
+        }, (3000 * eighthNoteTime)); 
+        setTimeout(function(){ 
+            document.getElementById("five").style.opacity = 0.7;
+            document.getElementById("four").style.opacity = 1;
+        }, (4000 * eighthNoteTime)); 
+        setTimeout(function(){ 
+            document.getElementById("six").style.opacity = 0.7;
+            document.getElementById("five").style.opacity = 1;
+        }, (5000 * eighthNoteTime)); 
+        setTimeout(function(){ 
+            document.getElementById("seven").style.opacity = 0.7;
+            document.getElementById("six").style.opacity = 1;
+        }, (6000 * eighthNoteTime)); 
+        setTimeout(function(){ 
+            document.getElementById("eight").style.opacity = 0.7;
+            document.getElementById("seven").style.opacity = 1;
+        }, (7000 * eighthNoteTime));  
+        setTimeout(function(){ 
+            document.getElementById("eight").style.opacity = 1;
+        }, (8000 * eighthNoteTime)); 
+         
         eight = eight + 1;
         if (eight == 8) {
             eight = 0;
