@@ -25,7 +25,7 @@ felder_gruen = []
 felder_blau = []
 felder_rot = []
 felder_orange = []
-sent = []
+notSent = []
 
 # dict für javascripfelder
 felderDict = {
@@ -114,13 +114,13 @@ def PinKoord (SPunktarray) :
     return yxFelder
 
 
-# Das Sent Array wird zurückgesetzt und ner mit Werten von 0 - 31 bestückt.
-# Aus dem Sent Array werden dann alle gesendeten herausgelöscht (mit pop),
+# Das notSent Array wird zurückgesetzt und ner mit Werten von 0 - 31 bestückt.
+# Aus dem notSent Array werden dann alle gesendeten herausgelöscht (mit pop),
 # danach wird mit den übriggebliebenen eine MidiNote mit velocity 0, also kein Stein auf dem Feld, gesendet.
 def sendMIDIContainer():
-    sent = []
+    notSent = []
     for i in range(32):
-        sent.append(i)
+        notSent.append(i)
 
     # Ruft sendMIDI für die jeweiligen Farbarrays auf
     #sendMIDI(felder_blau)
@@ -128,8 +128,8 @@ def sendMIDIContainer():
     sendMIDI(felder_gruen)
     sendMIDI(felder_orange)
 
-    for i in range(len(sent)):
-        sendMidiNote(sent[i], 0)
+    for i in range(len(notSent)):
+        sendMidiNote(notSent[i], 0)
 
 # Definiert wie eine Midi Note gesendet werden kann
 def sendMidiNote(note, velocity):
@@ -139,33 +139,34 @@ def sendMidiNote(note, velocity):
 # Schaut welches Array im Argument steht und sendet dann die dementsprechende Midi Note
 # Über das Wörterbuch werden die hier errechneten Werte in die vom Javascript erwarteten umgerechnet
 # Die Zahl 1-4 gibt die Farbe des Steins an
+# Desweiteren wird aus dem notSent Array die jeweils erkannte stelle gelöscht.
 def sendMIDI (felder):
     for i in range(len(felder[0])):
         if felder == felder_blau:
             sendMidiNote(felderDict[(felder[0][i], felder[1][i])], 3)
             try:
-                sent.pop(felderDict[(felder[0][i], felder[1][i])])
+                notSent.pop(felderDict[(felder[0][i], felder[1][i])])
             except:
                 pass
             
         if felder == felder_rot:
             sendMidiNote(felderDict[(felder[0][i], felder[1][i])], 1)
             try:
-                sent.pop(felderDict[(felder[0][i], felder[1][i])])
+                notSent.pop(felderDict[(felder[0][i], felder[1][i])])
             except:
                 pass
 
         if felder == felder_gruen:
             sendMidiNote(felderDict[(felder[0][i], felder[1][i])], 2)
             try:
-                sent.pop(felderDict[(felder[0][i], felder[1][i])])
+                notSent.pop(felderDict[(felder[0][i], felder[1][i])])
             except:
                 pass
 
         if felder == felder_orange:
             sendMidiNote(felderDict[(felder[0][i], felder[1][i])], 4)    
             try:
-                sent.pop(felderDict[(felder[0][i], felder[1][i])])
+                notSent.pop(felderDict[(felder[0][i], felder[1][i])])
             except:
                 pass
 
