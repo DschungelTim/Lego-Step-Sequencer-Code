@@ -57,6 +57,7 @@ function onMIDIMessage(event) {
             // Feld- und Farberkennung und schreiben ins Array
             felder[event.data[1]] = event.data[2];
             changeSliderParamMIDI();
+            changeColor();
             break;
     }
 }
