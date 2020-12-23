@@ -118,6 +118,7 @@ def PinKoord (SPunktarray) :
 # Aus dem notSent Array werden dann alle gesendeten herausgelöscht (mit pop),
 # danach wird mit den übriggebliebenen eine MidiNote mit velocity 0, also kein Stein auf dem Feld, gesendet.
 def sendMIDIContainer():
+    global notSent
     notSent = []
     for i in range(32):
         notSent.append(i)
