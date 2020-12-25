@@ -27,7 +27,7 @@ felder_rot = []
 felder_orange = []
 notSent = []
 
-# dict für javascripfelder
+# dict für javascriptfelder
 felderDict = {
     (1, 1) : 0,
     (2, 1) : 1,
@@ -113,6 +113,24 @@ def PinKoord (SPunktarray) :
                 yFelder = yxFelder[0]
                 yFelder.append(i+1)
     return yxFelder
+
+# Funktion, um zu erkennen, ob Stein zu Slider gehört, bislang noch ungetestet
+# zweite Idee: in PinKoord eine Abfrage machen, ob Y Wert zwischen 1 und 8 oder 9-10 liegt, und dementsprechend Y berechnen (durch 4 oder durch 127)
+def Slidererkennung(SPunktarray) :
+    dx = x1 - x0
+    dy = y1 - y0
+    yxFelder = [[],[]]
+    for i in range(0, len(SPunktarray)) :
+        X = SPunktarray [i] [0]
+        Y = SPunktarray [i] [1]
+	for i in range (8, 9) :
+            if (x0 + (i/10) * dx) < X <= (x1 - ((9-i)/10) * dx) :
+		xFelder = yxFelder[1]
+		xFelder.append(i+1)
+    	for i in range (0, 127) :
+            if (y0 + (i/127) * dy) < Y <= (y1 -((126 - i)/127) * dy) :
+		yFelder = yxFelder[0]
+		yFelder.append(i+1)
 
 # Das notSent Array wird zurückgesetzt und ner mit Werten von 0 - 31 bestückt.
 # Aus dem notSent Array werden dann alle gesendeten herausgelöscht (mit pop),
