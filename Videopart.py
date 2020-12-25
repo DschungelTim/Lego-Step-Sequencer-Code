@@ -96,13 +96,14 @@ def Schwerpunkte(maske) :
             print("Wups")
     return centres
 
+# Funktion, um die erkannten x- und y-Koordinaten in unser definiertes Raster einzuordnen.
 def PinKoord (SPunktarray) :
     dx = x1 - x0
     dy = y1 - y0
     yxFelder = [[], []]
     for i in range(0, len(SPunktarray)) :
-        Y = SPunktarray [i] [0]
-        X = SPunktarray [i] [1]
+        X = SPunktarray [i] [0]
+        Y = SPunktarray [i] [1]
         for i in range (0, 10) :
             if (x0 + (i/10) * dx) < X <= (x1 - ((9-i)/10) * dx) :
                 xFelder = yxFelder[1]
@@ -112,7 +113,6 @@ def PinKoord (SPunktarray) :
                 yFelder = yxFelder[0]
                 yFelder.append(i+1)
     return yxFelder
-
 
 # Das notSent Array wird zurückgesetzt und ner mit Werten von 0 - 31 bestückt.
 # Aus dem notSent Array werden dann alle gesendeten herausgelöscht (mit pop),
@@ -172,8 +172,6 @@ def sendMIDI (felder):
                 pass
 
 
-
-
 # Webcam öffnen
 cap = cv2.VideoCapture(0)
 
@@ -189,15 +187,15 @@ while cap.isOpened():
     mask_ecke = Masken(ecke[0], ecke[1], ecke[2], ecke[3])
     center_ecke = Schwerpunkte(mask_ecke)
     if center_ecke[0] [0] < center_ecke [1] [1] :
-        y0 = center_ecke[0] [0]
-        x0 = center_ecke[0] [1]
-        y1 = center_ecke [1] [0]
-        x1 = center_ecke [1] [1]
+        x0 = center_ecke[0] [0]
+        y0 = center_ecke[0] [1]
+        x1 = center_ecke [1] [0]
+        y1 = center_ecke [1] [1]
     else :
-        y0 = center_ecke [1] [0]
-        x0 = center_ecke [1] [1]
-        y1 = center_ecke[0] [0]
-        x1 = center_ecke[0] [1]
+        x0 = center_ecke [1] [0]
+        y0 = center_ecke [1] [1]
+        x1 = center_ecke[0] [0]
+        y1 = center_ecke[0] [1]
 
     # Maskenfunktion für jede Farbe aufrufen
     #mask_blau = Masken(blau[0], blau[1], blau[2], blau[3])
@@ -219,7 +217,7 @@ while cap.isOpened():
     felder_rot = PinKoord (center_rot)
     felder_gruen = PinKoord (center_gruen)
     felder_orange = PinKoord (center_orange)
-
+	
     # Hierüber werden alle Midi Sendungen geregelt
     sendMIDIContainer()
 
