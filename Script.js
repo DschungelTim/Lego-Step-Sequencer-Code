@@ -338,6 +338,23 @@ document.querySelector(`#B14`).addEventListener("mouseup", function(e) {
         felder[14] = 0;           
     }                   
 })
+document.querySelector(`#B15`).addEventListener("mouseup", function(e) {
+    if (felder[15] == 0) {
+        felder[15] = 1;           
+    }
+    else if (felder[15] == 1) {
+        felder[15] = 2;           
+    }
+    else if (felder[15] == 2) {
+        felder[15] = 3;           
+    }
+    else if (felder[15] == 3) {
+        felder[15] = 4;           
+    }
+    else if (felder[15] == 4) {
+        felder[15] = 0;           
+    }                   
+})
 document.querySelector(`#B16`).addEventListener("mouseup", function(e) {
     if (felder[16] == 0) {
         felder[16] = 1;           
