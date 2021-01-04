@@ -101,36 +101,24 @@ def PinKoord (SPunktarray) :
     dx = x1 - x0
     dy = y1 - y0
     yxFelder = [[], []]
+    Wert = 0
     for i in range(0, len(SPunktarray)) :
         X = SPunktarray [i] [0]
         Y = SPunktarray [i] [1]
         for i in range (0, 10) :
             if (x0 + (i/10) * dx) < X <= (x1 - ((9-i)/10) * dx) :
-                xFelder = yxFelder[1]
-                xFelder.append(i+1)      
-        for i in range (0, 4) :
-            if (y0 + (i/4) * dy) < Y <= (y1 -((3 - i)/4) * dy) :
-                yFelder = yxFelder[0]
-                yFelder.append(i+1)
+                if i == 9 or i == 10:
+                    Wert = ((Y-y0)/dy)*127
+                    Wert = round(Wert)   
+                    sendMidiNote(i+40, Wert) #i+40, damit Note gesendet wird, die sehr unterschiedlich zu "normalen Feldern" ist
+                if 0 <= i <= 8:
+                    xFelder = yxFelder[1]
+                    xFelder.append(i+1)   
+                    for i in range (0, 4) :
+                        if (y0 + (i/4) * dy) < Y <= (y1 -((3 - i)/4) * dy) :
+                            yFelder = yxFelder[0]
+                            yFelder.append(i+1)
     return yxFelder
-
-# Funktion, um zu erkennen, ob Stein zu Slider gehört, bislang noch ungetestet
-# zweite Idee: in PinKoord eine Abfrage machen, ob Y Wert zwischen 1 und 8 oder 9-10 liegt, und dementsprechend Y berechnen (durch 4 oder durch 127)
-def Slidererkennung(SPunktarray) :
-    dx = x1 - x0
-    dy = y1 - y0
-    yxFelder = [[],[]]
-    for i in range(0, len(SPunktarray)) :
-        X = SPunktarray [i] [0]
-        Y = SPunktarray [i] [1]
-	for i in range (8, 9) :
-            if (x0 + (i/10) * dx) < X <= (x1 - ((9-i)/10) * dx) :
-		xFelder = yxFelder[1]
-		xFelder.append(i+1)
-    	for i in range (0, 127) :
-            if (y0 + (i/127) * dy) < Y <= (y1 -((126 - i)/127) * dy) :
-		yFelder = yxFelder[0]
-		yFelder.append(i+1)
 
 # Das notSent Array wird zurückgesetzt und ner mit Werten von 0 - 31 bestückt.
 # Aus dem notSent Array werden dann alle gesendeten herausgelöscht (mit pop),
@@ -242,7 +230,7 @@ while cap.isOpened():
     # Video und Masken anzeigen
     cv2.imshow("Video", frame)
     cv2.imshow("Rot", mask_rot)
-    cv2.imshow("Blau", mask_blau)
+    #cv2.imshow("Blau", mask_blau)
     cv2.imshow("Grün", mask_gruen)
     cv2.imshow("Orange", mask_orange)
     cv2.imshow("Ecken", mask_ecke)
