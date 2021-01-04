@@ -31,6 +31,7 @@ gruen = getComputedStyle(document.documentElement).getPropertyValue('--gruen');
 gelb = getComputedStyle(document.documentElement).getPropertyValue('--gelb');
 blau = getComputedStyle(document.documentElement).getPropertyValue('--blau');
 background = getComputedStyle(document.documentElement).getPropertyValue('--vordergrund');
+ani = getComputedStyle(document.documentElement).getPropertyValue('--animation') 
 
 // MIDI Initialisieren
 if (navigator.requestMIDIAccess) {
@@ -60,12 +61,15 @@ function onMIDIMessage(event) {
 }
 
 
+
+         
+
 // Change backgroundColor of the div Elements in the css-file based on Array input
 function changeColor() {
     var i;
     for (i = 0; i < 32; i++) {
         if (felder[i] == 0) {
-            document.getElementById("B" + i).style.backgroundColor = background;
+            document.getElementById("B" + i).style.backgroundColor = background;           
         }
         else if (felder[i] == 1) {
             document.getElementById("B" + i).style.backgroundColor = rot;
@@ -355,55 +359,21 @@ document.querySelector(`#B16`).addEventListener("mouseup", function(e) {
         felder[16] = 0;           
     }                   
 })
-document.querySelector(`#B17`).addEventListener("mouseup", function(e) {
-    if (felder[17] == 0) {
-        felder[17] = 1;           
+document.querySelector(`#B20`).addEventListener("mouseup", function(e) {
+    if (felder[20] == 0) {
+        felder[20] = 1;           
     }
-    else if (felder[17] == 1) {
-        felder[17] = 2;           
+    else if (felder[20] == 1) {
+        felder[20] = 2;           
     }
-    else if (felder[17] == 2) {
-        felder[17] = 3;           
+    else if (felder[20] == 2) {
+        felder[20] = 3;           
     }
-    else if (felder[17] == 3) {
-        felder[17] = 4;           
+    else if (felder[20] == 3) {
+        felder[20] = 4;           
     }
-    else if (felder[17] == 4) {
-        felder[17] = 0;           
-    }                   
-})
-document.querySelector(`#B18`).addEventListener("mouseup", function(e) {
-    if (felder[18] == 0) {
-        felder[18] = 1;           
-    }
-    else if (felder[18] == 1) {
-        felder[18] = 2;           
-    }
-    else if (felder[18] == 2) {
-        felder[18] = 3;           
-    }
-    else if (felder[18] == 3) {
-        felder[18] = 4;           
-    }
-    else if (felder[18] == 4) {
-        felder[18] = 0;           
-    }                   
-})
-document.querySelector(`#B19`).addEventListener("mouseup", function(e) {
-    if (felder[19] == 0) {
-        felder[19] = 1;           
-    }
-    else if (felder[19] == 1) {
-        felder[19] = 2;           
-    }
-    else if (felder[19] == 2) {
-        felder[19] = 3;           
-    }
-    else if (felder[19] == 3) {
-        felder[19] = 4;           
-    }
-    else if (felder[19] == 4) {
-        felder[19] = 0;           
+    else if (felder[20] == 4) {
+        felder[20] = 0;           
     }                   
 })
 document.querySelector(`#B20`).addEventListener("mouseup", function(e) {
@@ -423,57 +393,6 @@ document.querySelector(`#B20`).addEventListener("mouseup", function(e) {
         felder[20] = 0;           
     }                   
 })
-document.querySelector(`#B21`).addEventListener("mouseup", function(e) {
-    if (felder[21] == 0) {
-        felder[21] = 1;           
-    }
-    else if (felder[21] == 1) {
-        felder[21] = 2;           
-    }
-    else if (felder[21] == 2) {
-        felder[21] = 3;           
-    }
-    else if (felder[21] == 3) {
-        felder[21] = 4;           
-    }
-    else if (felder[21] == 4) {
-        felder[21] = 0;           
-    }                   
-})
-document.querySelector(`#B22`).addEventListener("mouseup", function(e) {
-    if (felder[22] == 0) {
-        felder[22] = 1;           
-    }
-    else if (felder[22] == 1) {
-        felder[22] = 2;           
-    }
-    else if (felder[22] == 2) {
-        felder[22] = 3;           
-    }
-    else if (felder[22] == 3) {
-        felder[22] = 4;           
-    }
-    else if (felder[22] == 4) {
-        felder[22] = 0;           
-    }                   
-})
-document.querySelector(`#B23`).addEventListener("mouseup", function(e) {
-    if (felder[23] == 0) {
-        felder[23] = 1;           
-    }
-    else if (felder[23] == 1) {
-        felder[23] = 2;           
-    }
-    else if (felder[23] == 2) {
-        felder[23] = 3;           
-    }
-    else if (felder[23] == 3) {
-        felder[23] = 4;           
-    }
-    else if (felder[23] == 4) {
-        felder[23] = 0;           
-    }                   
-})
 document.querySelector(`#B24`).addEventListener("mouseup", function(e) {
     if (felder[24] == 0) {
         felder[24] = 1;           
@@ -489,57 +408,6 @@ document.querySelector(`#B24`).addEventListener("mouseup", function(e) {
     }
     else if (felder[24] == 4) {
         felder[24] = 0;           
-    }                   
-})
-document.querySelector(`#B25`).addEventListener("mouseup", function(e) {
-    if (felder[25] == 0) {
-        felder[25] = 1;           
-    }
-    else if (felder[25] == 1) {
-        felder[25] = 2;           
-    }
-    else if (felder[25] == 2) {
-        felder[25] = 3;           
-    }
-    else if (felder[25] == 3) {
-        felder[25] = 4;           
-    }
-    else if (felder[25] == 4) {
-        felder[25] = 0;           
-    }                   
-})
-document.querySelector(`#B26`).addEventListener("mouseup", function(e) {
-    if (felder[26] == 0) {
-        felder[26] = 1;           
-    }
-    else if (felder[26] == 1) {
-        felder[26] = 2;           
-    }
-    else if (felder[26] == 2) {
-        felder[26] = 3;           
-    }
-    else if (felder[26] == 3) {
-        felder[26] = 4;           
-    }
-    else if (felder[26] == 4) {
-        felder[26] = 0;           
-    }                   
-})
-document.querySelector(`#B27`).addEventListener("mouseup", function(e) {
-    if (felder[27] == 0) {
-        felder[27] = 1;           
-    }
-    else if (felder[27] == 1) {
-        felder[27] = 2;           
-    }
-    else if (felder[27] == 2) {
-        felder[27] = 3;           
-    }
-    else if (felder[27] == 3) {
-        felder[27] = 4;           
-    }
-    else if (felder[27] == 4) {
-        felder[27] = 0;           
     }                   
 })
 document.querySelector(`#B28`).addEventListener("mouseup", function(e) {
@@ -559,57 +427,10 @@ document.querySelector(`#B28`).addEventListener("mouseup", function(e) {
         felder[28] = 0;           
     }                   
 })
-document.querySelector(`#B29`).addEventListener("mouseup", function(e) {
-    if (felder[29] == 0) {
-        felder[29] = 1;           
-    }
-    else if (felder[29] == 1) {
-        felder[29] = 2;           
-    }
-    else if (felder[29] == 2) {
-        felder[29] = 3;           
-    }
-    else if (felder[29] == 3) {
-        felder[29] = 4;           
-    }
-    else if (felder[29] == 4) {
-        felder[29] = 0;           
-    }                   
-})
-document.querySelector(`#B30`).addEventListener("mouseup", function(e) {
-    if (felder[30] == 0) {
-        felder[30] = 1;           
-    }
-    else if (felder[30] == 1) {
-        felder[30] = 2;           
-    }
-    else if (felder[30] == 2) {
-        felder[30] = 3;           
-    }
-    else if (felder[30] == 3) {
-        felder[30] = 4;           
-    }
-    else if (felder[30] == 4) {
-        felder[30] = 0;           
-    }                   
-})
-document.querySelector(`#B31`).addEventListener("mouseup", function(e) {
-    if (felder[31] == 0) {
-        felder[31] = 1;           
-    }
-    else if (felder[31] == 1) {
-        felder[31] = 2;           
-    }
-    else if (felder[31] == 2) {
-        felder[31] = 3;           
-    }
-    else if (felder[31] == 3) {
-        felder[31] = 4;           
-    }
-    else if (felder[31] == 4) {
-        felder[31] = 0;           
-    }                   
-})
+
+
+    
+
 
 // Audiosound laden
 for (let i = 0; i < 5; i++)
@@ -687,7 +508,7 @@ function playBeat() {
             //console.log(i, j)
             playSound(whichSound(i, j), startTime + eight * eighthNoteTime);
         }
-
+        
         setTimeout(function(){ 
             document.getElementById("one").style.opacity = 0.7;
         }, (0 * eighthNoteTime));   
@@ -721,8 +542,7 @@ function playBeat() {
         }, (7000 * eighthNoteTime));  
         setTimeout(function(){ 
             document.getElementById("eight").style.opacity = 1;
-        }, (8000 * eighthNoteTime)); 
-         
+        }, (8000 * eighthNoteTime));  
         eight = eight + 1;
         if (eight == 8) {
             eight = 0;
@@ -785,8 +605,8 @@ function changeSliderParamMIDI() {
     document.getElementById("speedSlider").value = speedMIDI + 50;
 }
 
-// Die sollte dann immer aufgerufen werden, wenn eine MIDI Note kommt, oder ein div angeklickt wird 
-// Wenn ein Feld angeklickt wird, wird die changeColor() Funktion aufgerufen
+// Die sollte dann immer aufgerufen werden, wenn eine MIDI Note kommt, oder ein div angeklickt wird
+// Hiermit wird vorerst die changeColor() Funktion aufgerufen
 // WICHTIG: Nur ein setInterval pro js wahrscheinlich möglich (nicht 100% sicher)
 var felders = document.getElementsByClassName("Feld");
 for (var i = 0; i < felders.length; i++) {
@@ -794,7 +614,6 @@ for (var i = 0; i < felders.length; i++) {
         changeColor();
     });
 }
-
 
 // Functionallity for the StartStop Button
 startButton.addEventListener("click", function (e) {

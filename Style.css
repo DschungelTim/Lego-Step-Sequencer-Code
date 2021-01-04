@@ -2,7 +2,7 @@
     --hintergrund: #171718;
     --hintergrund2:  #262627 ; 
     --vordergrund:  #b4b2aa;
-    --vordergrund2:  #171718;
+    --vordergrund2:  #17171800;
     --rot:  #743429;
     --gelb:  #b19e36;
     --gruen:  #3b642e;
@@ -43,7 +43,7 @@ html, body {
 
 .Feld {
     /*hier in color sind die Zahlen versteckt */
-    color: var(--vordergrund);
+    color: var(--vordergrund2);
     width: 90px;
     height: 90px;
     float: both;
