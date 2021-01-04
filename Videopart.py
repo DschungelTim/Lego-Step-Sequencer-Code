@@ -2,6 +2,7 @@ import numpy as np
 import cv2
 import rtmidi
 import mido
+import time
 
 # Midi Port
 midiOutput = mido.open_output("LoopBe Internal MIDI 1")
@@ -9,7 +10,7 @@ midiOutput = mido.open_output("LoopBe Internal MIDI 1")
 # Wertebereich Hue: 0-180, Sat: 0-255
 # [Hue_min, Hue_max, Sat_min, Sat_max]
 gruen = [60, 90, 153, 255]
-#blau = [100, 120, 204, 255]
+hellblau = [80, 105, 230, 255]
 rot = [160, 190, 190, 245]
 orange = [0, 15, 130, 210]
 ecke = [100, 120, 204, 255]
@@ -25,7 +26,7 @@ felder_gruen = []
 felder_blau = []
 felder_rot = []
 felder_orange = []
-notSent = []
+Sent = []
 
 # dict für javascriptfelder
 felderDict = {
@@ -107,11 +108,11 @@ def PinKoord (SPunktarray) :
         Y = SPunktarray [i] [1]
         for i in range (0, 10) :
             if (x0 + (i/10) * dx) < X <= (x1 - ((9-i)/10) * dx) :
-                if i == 9 or i == 10:
+                if i == 8 or i == 9:
                     Wert = ((Y-y0)/dy)*127
                     Wert = round(Wert)   
-                    sendMidiNote(i+40, Wert) #i+40, damit Note gesendet wird, die sehr unterschiedlich zu "normalen Feldern" ist
-                if 0 <= i <= 8:
+                    sendMidiNote(i+24, 127-Wert) #i+40, damit Note gesendet wird, die sehr unterschiedlich zu "normalen Feldern" ist
+                if 0 <= i <= 7:
                     xFelder = yxFelder[1]
                     xFelder.append(i+1)   
                     for i in range (0, 4) :
@@ -124,24 +125,26 @@ def PinKoord (SPunktarray) :
 # Aus dem notSent Array werden dann alle gesendeten herausgelöscht (mit pop),
 # danach wird mit den übriggebliebenen eine MidiNote mit velocity 0, also kein Stein auf dem Feld, gesendet.
 def sendMIDIContainer():
-    global notSent
-    notSent = []
+    global Sent
+    Sent = []
     for i in range(32):
-        notSent.append(i)
+        Sent.append(0)
 
     # Ruft sendMIDI für die jeweiligen Farbarrays auf
-    #sendMIDI(felder_blau)
+    sendMIDI(felder_hellblau)
     sendMIDI(felder_rot)
     sendMIDI(felder_gruen)
     sendMIDI(felder_orange)
 
-    for i in range(len(notSent)):
-        sendMidiNote(notSent[i], 0)
+    for i in range(len(Sent)):
+        sendMidiNote(i, Sent[i])
 
 # Definiert wie eine Midi Note gesendet werden kann
 def sendMidiNote(note, velocity):
-	message = mido.Message('note_on', note=note, velocity=velocity)
-	midiOutput.send(message)
+    message = mido.Message('note_on', note=note, velocity=velocity)
+    if (velocity == 0):
+        print(message)
+    midiOutput.send(message)
 
 # Schaut welches Array im Argument steht und sendet dann die dementsprechende Midi Note
 # Über das Wörterbuch werden die hier errechneten Werte in die vom Javascript erwarteten umgerechnet
@@ -149,33 +152,20 @@ def sendMidiNote(note, velocity):
 # Desweiteren wird aus dem notSent Array die jeweils erkannte stelle gelöscht.
 def sendMIDI (felder):
     for i in range(len(felder[0])):
-        if felder == felder_blau:
-            sendMidiNote(felderDict[(felder[0][i], felder[1][i])], 3)
-            try:
-                notSent.pop(felderDict[(felder[0][i], felder[1][i])])
-            except:
-                pass
+        if felder == felder_hellblau:
+            Sent[felderDict[(felder[0][i], felder[1][i])]] = 3
             
         if felder == felder_rot:
-            sendMidiNote(felderDict[(felder[0][i], felder[1][i])], 1)
-            try:
-                notSent.pop(felderDict[(felder[0][i], felder[1][i])])
-            except:
-                pass
+            Sent[felderDict[(felder[0][i], felder[1][i])]] = 1
+                
 
         if felder == felder_gruen:
-            sendMidiNote(felderDict[(felder[0][i], felder[1][i])], 2)
-            try:
-                notSent.pop(felderDict[(felder[0][i], felder[1][i])])
-            except:
-                pass
+            Sent[felderDict[(felder[0][i], felder[1][i])]] = 2
+                
 
         if felder == felder_orange:
-            sendMidiNote(felderDict[(felder[0][i], felder[1][i])], 4)    
-            try:
-                notSent.pop(felderDict[(felder[0][i], felder[1][i])])
-            except:
-                pass
+            Sent[felderDict[(felder[0][i], felder[1][i])]] = 4
+                
 
 
 # Webcam öffnen
@@ -183,6 +173,7 @@ cap = cv2.VideoCapture(0)
 
 # Hauptschleife während Kamera geöffnet ist
 while cap.isOpened():
+    print("start")
     ret, frame = cap.read()
 
     # Bild in HSV splitten
@@ -190,47 +181,56 @@ while cap.isOpened():
     h, s, v = cv2.split(hsv)
 
         # Eckpunkte des Koordinatensystems berechnen
-    mask_ecke = Masken(ecke[0], ecke[1], ecke[2], ecke[3])
-    center_ecke = Schwerpunkte(mask_ecke)
-    if center_ecke[0] [0] < center_ecke [1] [1] :
-        x0 = center_ecke[0] [0]
-        y0 = center_ecke[0] [1]
-        x1 = center_ecke [1] [0]
-        y1 = center_ecke [1] [1]
-    else :
-        x0 = center_ecke [1] [0]
-        y0 = center_ecke [1] [1]
-        x1 = center_ecke[0] [0]
-        y1 = center_ecke[0] [1]
+    try:
+        mask_ecke = Masken(ecke[0], ecke[1], ecke[2], ecke[3])
+        center_ecke = Schwerpunkte(mask_ecke)
+        if center_ecke[0] [0] < center_ecke [1] [1] :
+            x0 = center_ecke[0] [0]
+            y0 = center_ecke[0] [1]
+            x1 = center_ecke [1] [0]
+            y1 = center_ecke [1] [1]
+        else :
+            x0 = center_ecke [1] [0]
+            y0 = center_ecke [1] [1]
+            x1 = center_ecke[0] [0]
+            y1 = center_ecke[0] [1]
 
-    # Maskenfunktion für jede Farbe aufrufen
-    #mask_blau = Masken(blau[0], blau[1], blau[2], blau[3])
-    mask_rot = Masken(rot[0], rot[1], rot[2], rot[3])
-    mask_gruen = Masken(gruen[0], gruen[1], gruen[2], gruen[3])
-    mask_orange = Masken(orange[0], orange[1], orange[2], orange[3]) 
+        # Maskenfunktion für jede Farbe aufrufen
+        mask_hellblau = Masken(hellblau[0], hellblau[1], hellblau[2], hellblau[3])
+        mask_rot = Masken(rot[0], rot[1], rot[2], rot[3])
+        mask_gruen = Masken(gruen[0], gruen[1], gruen[2], gruen[3])
+        mask_orange = Masken(orange[0], orange[1], orange[2], orange[3]) 
 
-    # Funktionen aufrufen, um Schwerpunkte zu berechen, Ergebis wird als Array gespeichert mit jeweils x,y Koordinate
-    #center_blau = Schwerpunkte(mask_blau)
-    center_rot = Schwerpunkte(mask_rot)
-    center_gruen = Schwerpunkte(mask_gruen)
-    center_orange = Schwerpunkte(mask_orange)
+        # Funktionen aufrufen, um Schwerpunkte zu berechen, Ergebis wird als Array gespeichert mit jeweils x,y Koordinate
+        center_hellblau = Schwerpunkte(mask_hellblau)
+        center_rot = Schwerpunkte(mask_rot)
+        center_gruen = Schwerpunkte(mask_gruen)
+        center_orange = Schwerpunkte(mask_orange)
 
-    # Funktion aufrufen, um die center_daten in 2D Array mit informationen über "aktivierte" Felder umzuwandeln
-    # Für drei rote Steine könnte dann zB. ein solches Array mit y und x Felderzahlen herauskommen:
-    #   felder_rot = [[1, 4], [1, 8]] für zwei Steine ganz oben links und ganz unten rechts.
-    # felder =[[die y-felder zahlen von 1-4], [die x-felder zahlen von 1-8]]
-    #felder_blau = PinKoord (center_blau)
-    felder_rot = PinKoord (center_rot)
-    felder_gruen = PinKoord (center_gruen)
-    felder_orange = PinKoord (center_orange)
-	
-    # Hierüber werden alle Midi Sendungen geregelt
-    sendMIDIContainer()
-
+        # Funktion aufrufen, um die center_daten in 2D Array mit informationen über "aktivierte" Felder umzuwandeln
+        # Für drei rote Steine könnte dann zB. ein solches Array mit y und x Felderzahlen herauskommen:
+        #   felder_rot = [[1, 4], [1, 8]] für zwei Steine ganz oben links und ganz unten rechts.
+        # felder =[[die y-felder zahlen von 1-4], [die x-felder zahlen von 1-8]]
+        felder_hellblau = PinKoord (center_hellblau)
+        felder_rot = PinKoord (center_rot)
+        felder_gruen = PinKoord (center_gruen)
+        felder_orange = PinKoord (center_orange)
+        
+        # Hierüber werden alle Midi Sendungen geregelt
+        sendMIDIContainer()
+        print("rote Felder")
+        print(felder_rot)
+        print("grüne felder")
+        print(felder_gruen)
+        print("gelbe felder")
+        print(felder_orange)
+        time.sleep(0.1)
+    except:
+        pass
     # Video und Masken anzeigen
     cv2.imshow("Video", frame)
     cv2.imshow("Rot", mask_rot)
-    #cv2.imshow("Blau", mask_blau)
+    cv2.imshow("Hellblau", mask_hellblau)
     cv2.imshow("Grün", mask_gruen)
     cv2.imshow("Orange", mask_orange)
     cv2.imshow("Ecken", mask_ecke)

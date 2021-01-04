@@ -22,7 +22,7 @@ let sliders = document.getElementsByClassName("slider");
 // 0 = aus, 1(basedrum) = red, 2(snaredrum) = green, 3(clap) = blue, 4(hihat) = orange
 // Die Reihenfolge ist wie folgt: [1.Zeile1.Spalte, 2.Zeile1.Spalte, 3.Zeile1.Spalte, 4.Zeile1.Spalte, 1.Zeile2.Spalte, usw...]
 // Die letzten zwei Felder sind für die Slider, felder[32] Gain von 0-127=0dB-5dB und felder[33] Speed von 0-127=50bpm-178bpm
-let felder = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 20, 30];
+let felder = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 20, 70];
 
 
 //Farbvariablen
@@ -64,6 +64,7 @@ function onMIDIMessage(event) {
 function changeColor() {
     var i;
     for (i = 0; i < 32; i++) {
+
         if (felder[i] == 0) {
             document.getElementById("B" + i).style.backgroundColor = background;
         }
@@ -792,12 +793,12 @@ function changeSliderParamMIDI() {
     let speedMIDI = felder[33];
     
     gain.gain.value = gainMIDI;
-    console.log(gain.gain.value);
+    //console.log(gain.gain.value);
     document.querySelector("#gainOutput").innerHTML = gainMIDI + " dB";
     document.getElementById("gainSlider").value = gainMIDI*100;
 
     eighthNoteTime = (60 / (speedMIDI+50)) / 2;
-    console.log(eighthNoteTime);
+    //console.log(eighthNoteTime);
     document.querySelector("#speedOutput").innerHTML = speedMIDI+50 + " bpm";
     document.getElementById("speedSlider").value = speedMIDI + 50;
 }
