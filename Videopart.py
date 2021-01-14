@@ -91,7 +91,7 @@ def Schwerpunkte(maske) :
             moments = cv2.moments(contours[i])
             centres.append((int(moments['m10']/moments['m00']), int(moments['m01']/moments['m00'])))
         except:
-            pass
+            print("Wups")
     return centres
 
 # Funktion, um die erkannten x- und y-Koordinaten in unser definiertes Raster einzuordnen.
@@ -141,6 +141,7 @@ def sendMIDIContainer():
 def sendMidiNote(note, velocity):
     message = mido.Message('note_on', note=note, velocity=velocity)
     midiOutput.send(message)
+    print(message)
 
 # Schaut welches Array im Argument steht und sendet dann die dementsprechende Midi Note
 # Über das Wörterbuch werden die hier errechneten Werte in die vom Javascript erwarteten umgerechnet
@@ -193,6 +194,7 @@ while cap.isOpened():
                 y0 = center_ecke [1] [1]
                 x1 = center_ecke[0] [0]
                 y1 = center_ecke[0] [1]
+        counter = counter + 1
 
         # Maskenfunktion für jede Farbe aufrufen
         mask_hellblau = Masken(hellblau[0], hellblau[1], hellblau[2], hellblau[3])
@@ -207,7 +209,7 @@ while cap.isOpened():
         center_gruen = Schwerpunkte(mask_gruen)
         center_orange = Schwerpunkte(mask_orange)
         center_blau = Schwerpunkte(mask_blau)
-
+    
         # Funktion aufrufen, um die center_daten in 2D Array mit informationen über "aktivierte" Felder umzuwandeln
         # Für drei rote Steine könnte dann zB. ein solches Array mit y und x Felderzahlen herauskommen:
         #   felder_rot = [[1, 4], [1, 8]] für zwei Steine ganz oben links und ganz unten rechts.
@@ -217,11 +219,10 @@ while cap.isOpened():
         felder_gruen = PinKoord (center_gruen)
         felder_orange = PinKoord (center_orange)
         felder_blau = PinKoord (center_blau)
-        
+        print(felder_gruen)
         # Hierüber werden alle Midi Sendungen geregelt
         sendMIDIContainer()
         time.sleep(0.1)
-        counter = counter + 1
     except:
         pass
     # Video und Masken anzeigen
