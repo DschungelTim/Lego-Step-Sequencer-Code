@@ -106,7 +106,7 @@ def PinKoord (SPunktarray) :
         for i in range (0, 10) :
             if (x0 + (i/10) * dx) < X <= (x1 - ((9-i)/10) * dx) :
                 if i == 8 or i == 9:
-                    Wert = ((Y-y0)/dy)*127
+                    Wert = ((Y-127)/192)*127
                     Wert = round(Wert)   
                     sendMidiNote(i+24, 127-Wert) #i+40, damit Note gesendet wird, die sehr unterschiedlich zu "normalen Feldern" ist
                 if 0 <= i <= 7:
