@@ -263,10 +263,10 @@ document.querySelector(`#B8`).addEventListener("mouseup", function(e) {
         felder[8] = 4;           
     }
     else if (felder[8] == 4) {
-        felder[8] = 0;           
+        felder[8] = 5;           
     }    
     else if (felder[8] == 5) {
-        felder[8] = 5;           
+        felder[8] = 0;           
     }                 
 })
 document.querySelector(`#B9`).addEventListener("mouseup", function(e) {
