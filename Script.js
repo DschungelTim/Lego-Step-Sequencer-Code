@@ -926,3 +926,65 @@ startButton.addEventListener("click", function (e) {
     }
     isPlaying = !isPlaying;
 });
+
+//Legendensounds
+document.querySelector("#rot").addEventListener("mouseup", function(e){
+    let sound = new Audio("/sounds/sound1.wav");
+    let soundNode = context.createMediaElementSource(sound);
+    let gainNode = context.createGain();
+
+    gainNode.gain.value = 0.8;
+
+    soundNode.connect(gainNode);
+    gainNode.connect(context.destination);
+
+    sound.play();
+})
+document.querySelector("#gruen").addEventListener("mouseup", function(e){
+    let sound = new Audio("/sounds/sound2.wav");
+    let soundNode = context.createMediaElementSource(sound);
+    let gainNode = context.createGain();
+
+    gainNode.gain.value = 0.8;
+
+    soundNode.connect(gainNode);
+    gainNode.connect(context.destination);
+
+    sound.play();
+})
+document.querySelector("#hellblau").addEventListener("mouseup", function(e){
+    let sound = new Audio("/sounds/sound3.wav");
+    let soundNode = context.createMediaElementSource(sound);
+    let gainNode = context.createGain();
+
+    gainNode.gain.value = 0.8;
+
+    soundNode.connect(gainNode);
+    gainNode.connect(context.destination);
+
+    sound.play();
+})
+document.querySelector("#gelb").addEventListener("mouseup", function(e){
+    let sound = new Audio("/sounds/sound4.wav");
+    let soundNode = context.createMediaElementSource(sound);
+    let gainNode = context.createGain();
+
+    gainNode.gain.value = 0.8;
+
+    soundNode.connect(gainNode);
+    gainNode.connect(context.destination);
+
+    sound.play();
+})
+document.querySelector("#blau").addEventListener("mouseup", function(e){
+    let sound = new Audio("/sounds/sound5.wav");
+    let soundNode = context.createMediaElementSource(sound);
+    let gainNode = context.createGain();
+
+    gainNode.gain.value = 0.8;
+
+    soundNode.connect(gainNode);
+    gainNode.connect(context.destination);
+
+    sound.play();
+})

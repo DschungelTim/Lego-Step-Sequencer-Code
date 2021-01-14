@@ -159,7 +159,9 @@ html, body {
     padding-top: 5%;
     padding-bottom: 5%;
 }
-
+.Farbraum:hover {
+    opacity: 0.7;
+}
 #rot {
     background-color: var(--rot);
 }
@@ -171,4 +173,7 @@ html, body {
 }
 #gruen {
     background-color: var(--gruen);
+}
+#hellblau {
+    background-color: var(--hellblau);
 }
