@@ -19,7 +19,7 @@ let eighthNoteTime = (60 / tempo) / 2;
 let sliders = document.getElementsByClassName("slider");
 
 // Array für Felderkennung, 32 Felder wobei 0 aus ist und 1-4 verschiedene Farben
-// 0 = aus, 1(basedrum) = red, 2(snaredrum) = green, 3(clap) = blue, 4(hihat) = orange
+// 0 = aus, 1(basedrum) = red, 2(snaredrum) = green, 3(clap) = hellblau, 4(hihat) = orange, 5(soundtbd) = blau
 // Die Reihenfolge ist wie folgt: [1.Zeile1.Spalte, 2.Zeile1.Spalte, 3.Zeile1.Spalte, 4.Zeile1.Spalte, 1.Zeile2.Spalte, usw...]
 // Die letzten zwei Felder sind für die Slider, felder[32] Gain von 0-127=0dB-5dB und felder[33] Speed von 0-127=50bpm-178bpm
 let felder = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 20, 70];
@@ -29,6 +29,7 @@ let felder = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
 rot = getComputedStyle(document.documentElement).getPropertyValue('--rot');
 gruen = getComputedStyle(document.documentElement).getPropertyValue('--gruen');
 gelb = getComputedStyle(document.documentElement).getPropertyValue('--gelb');
+hellblau = getComputedStyle(document.documentElement).getPropertyValue('--hellblau');
 blau = getComputedStyle(document.documentElement).getPropertyValue('--blau');
 background = getComputedStyle(document.documentElement).getPropertyValue('--vordergrund');
 
@@ -75,10 +76,13 @@ function changeColor() {
             document.getElementById("B" + i).style.backgroundColor = gruen;
         }
         else if (felder[i] == 3) {
-            document.getElementById("B" + i).style.backgroundColor = blau;
+            document.getElementById("B" + i).style.backgroundColor = hellblau;
         }
         else if (felder[i] == 4) {
             document.getElementById("B" + i).style.backgroundColor = gelb;
+        }
+        else if (felder[i] == 5) {
+            document.getElementById("B" + i).style.backgroundColor = blau;
         }
     }
 }
@@ -630,7 +634,7 @@ document.querySelector(`#B31`).addEventListener("mouseup", function(e) {
 })
 
 // Audiosound laden
-for (let i = 0; i < 5; i++)
+for (let i = 0; i < 6; i++)
     getAudioData(i);
 
 function getAudioData(i) {
@@ -667,7 +671,6 @@ function convertToHex(str){
 // Funktion, welche an einer bestimmten Spalte, Zeile nachschaut welche Farbe vorhanden ist und daraufhin
 // den ensprechenden Sound zurückgibt
 function whichSound(Spalte, Zeile) {
-
     var element = document.getElementById('B' + (Spalte + Zeile)),
         style = window.getComputedStyle(element),
         color = style.getPropertyValue('background-color');
@@ -678,18 +681,19 @@ function whichSound(Spalte, Zeile) {
     }
     else if (color.trim() === rot.trim()) {
         return audioBuffers[1];
-        
     }
     else if (color.trim() === gruen.trim()) {
         return audioBuffers[2];
     }
-    else if (color.trim() === blau.trim()) {
+    else if (color.trim() === hellblau.trim()) {
         return audioBuffers[3];
     }
     else if (color.trim() === gelb.trim()) {
         return audioBuffers[4];
     }
-    
+    else if (color.trim() === blau.trim()) {
+        return audioBuffers[5];
+    }
 }
 
 // Funktion, welche durch setInterval unten alle 90 bpm wiederholt wird.
