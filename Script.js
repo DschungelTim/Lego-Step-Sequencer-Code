@@ -68,9 +68,11 @@ function changeColor() {
 
         if (felder[i] == 0) {
             document.getElementById("B" + i).style.backgroundColor = background;
+            document.getElementById("B" + i).style.backgroundImage = "";
         }
         else if (felder[i] == 1) {
             document.getElementById("B" + i).style.backgroundColor = rot;
+            document.getElementById("B" + i).style.backgroundImage = "url('/PNGs/legostein1.PNG')";
         }
         else if (felder[i] == 2) {
             document.getElementById("B" + i).style.backgroundColor = gruen;
@@ -920,9 +922,11 @@ startButton.addEventListener("click", function (e) {
     if (isPlaying) {
         startButton.innerHTML = "START";
         clearTimeout(loopTout);
+        //startButton.style.backgroundImage = "";
     } else {
         startButton.innerHTML = "STOP";
         startTimeout()
+        //startButton.style.backgroundImage = "url('/PNGs/legostein1.PNG')";
     }
     isPlaying = !isPlaying;
 });

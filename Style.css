@@ -1,9 +1,9 @@
 /* Farbvariablen festlegen*/
 :root {
     --hintergrund: #171718;
-    --hintergrund2:  #262627 ; 
+    --hintergrund2:  #2e2e2e ; 
     --vordergrund:  #b4b2aa;
-    --vordergrund2:  #17171800;
+    --transparenz:  #17171800;
     --rot:  #832a39;
     --gelb:  #b18036;
     --hellblau:  #317375 ;
@@ -17,7 +17,6 @@ html, body {
     width: 100%;
     background: var(--hintergrund);
     /*background-image: url("giphy.gif");*/
-    
     text-align: center;
 }
 
@@ -25,13 +24,16 @@ html, body {
 #startButton {
     font-family: var(--font);
     background-color:var(--vordergrund);
+    /*background-image:url("lego.PNG");*/
+    color:var(--hintergrund);
     border: none;
-    padding: 1.5%;
-    font-size: 40px;
+    width:190px;
+    height:95px;
+    font-size: 50px;
     margin-top: 4%; 
     margin-bottom: 2%;
+    margin-right: 4%;
 }
-
 #startButton:hover {
     opacity: 0.7;
 }
@@ -43,29 +45,26 @@ html, body {
     margin-left: 15%;
 }
 .slot {
-    float: left;  
-    
+    float: left;    
 }
-
 .Feld {
     /*hier in color sind die Zahlen versteckt */
-    color: var(--vordergrund2);
+    color: var(--transparenz);
     width: 95px;
     height: 95px;
-    float: both;
     border: none;
     margin: 1px;
     margin-bottom: 2px;
     padding-top: 0;
     padding-bottom:0 ;
     background-color:var(--vordergrund);
-
 }
-
 .Feld:hover{
     opacity: 70%;
 }
 
+
+/* Styling SLider*/
 .sliderContainer {
     height: 386px;
     width: 7%;
@@ -74,7 +73,6 @@ html, body {
     margin: 1px;
     margin-left: 1px;
 }
-
 .Sliderschrift {
     font-size: 20;
     margin-top: 20px;
@@ -82,14 +80,12 @@ html, body {
     color: var(--hintergrund);
     font-weight: 500;
 }
-
 #gainOutput {
     margin-top:140px;
 }
 #speedOutput {
     margin-top:140px;
 }
-
 .slider {   
     height: 15px;
     width: 280px;
@@ -101,65 +97,61 @@ html, body {
     opacity: 1;
     appearance: none;
 }
-
 .slider::-webkit-slider-thumb {
     appearance: none;
     align-self: center;
-    width: 25px;
-    height: 50px;
+    width: 38px;
+    height: 76px;
     opacity: 1;
     background:var(--hintergrund);
-    cursor: pointer;
-    
+    background-image: url("/PNGs/legostein2.PNG");
+    cursor: pointer; 
 }
 
 
 /*Styling Legende*/
 #Legende {
-    background-color: var(--hintergrund2);
+    background-color: var(--transparenz);
     font-family: var(--font);
     font-size: larger;
     font-weight: 500;
     color: var(--vordergrund);
-    width: 200px;
-    float: left;
-    height: 346px;
+    width: 1100px; 
     margin: 1px;
-    padding: 20px;
-    margin-left: 10%;
-    margin-right: 2%;
-    
+    margin-left: 15%;
+    margin-top: 8px;
+    float: left;  
 }
-
 .Farbraum {
     font-size: smaller;
     font-weight: 400;
     color: var(--vordergrund);
-    width: 80%;
-    margin:5px;
-    margin-left:20px;
-    margin-right: 20px ;
-    padding-top: 6.5%;
-    padding-bottom: 6.5%;
+    float: left;
+    width: 190px;
+    margin:1px;
+    padding-top: 20px;
+    padding-bottom: 20px;
     border: none;
 }
 .Farbraum:hover {
     opacity: 0.7;
 }
-
 #rot {
     background-color: var(--rot);
-    margin-top: 20px;
-}
-#blau {
-    background-color: var(--blau);
+    margin-right: 7.9px;
 }
 #gelb {
     background-color: var(--gelb);
+    margin-right: 7.9px;
 }
 #gruen {
     background-color: var(--gruen);
+    margin-right: 7.9px;
 }
 #hellblau {
     background-color: var(--hellblau);
+    margin-right: 7.9px;
+}
+#blau {
+    background-color: var(--blau);
 }
