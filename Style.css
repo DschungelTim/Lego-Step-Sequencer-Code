@@ -67,7 +67,7 @@ html, body {
 /* Styling SLider*/
 .sliderContainer {
     height: 386px;
-    width: 7%;
+    width: 104px;
     float: left;
     background-color:var(--vordergrund);
     margin: 1px;
@@ -138,19 +138,19 @@ html, body {
 }
 #rot {
     background-color: var(--rot);
-    margin-right: 7.9px;
+    margin-right: 8px;
 }
 #gelb {
     background-color: var(--gelb);
-    margin-right: 7.9px;
+    margin-right: 8px;
 }
 #gruen {
     background-color: var(--gruen);
-    margin-right: 7.9px;
+    margin-right: 8px;
 }
 #hellblau {
     background-color: var(--hellblau);
-    margin-right: 7.9px;
+    margin-right: 8px;
 }
 #blau {
     background-color: var(--blau);
