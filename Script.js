@@ -14,7 +14,6 @@ let gain = context.createGain();
 let tempo = 90; // BPM (beats per minute)
 let eighthNoteTime = (60 / tempo) / 2;
 
-
 // Slider array initialisieren
 let sliders = document.getElementsByClassName("slider");
 
@@ -25,7 +24,7 @@ let sliders = document.getElementsByClassName("slider");
 let felder = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 20, 70];
 
 
-//Farbvariablen
+//Farbvariablen aus CSS
 rot = getComputedStyle(document.documentElement).getPropertyValue('--rot');
 gruen = getComputedStyle(document.documentElement).getPropertyValue('--gruen');
 gelb = getComputedStyle(document.documentElement).getPropertyValue('--gelb');
@@ -48,7 +47,7 @@ if (navigator.requestMIDIAccess) {
     alert("No MIDI support in your browser.");
 }
 
-// Wenn MIDI-Nachricht kommt, speichere im Array an der Richtigen Stelle die Farbe in Form von 0(aus), 1(farb1)...usw
+// Wenn MIDI-Nachricht kommt, speichere im Array an der richtigen Stelle die Farbe in Form von 0(aus), 1(farb1)...usw
 function onMIDIMessage(event) {
     switch (event.data[0]) {
         case 144:
@@ -61,7 +60,7 @@ function onMIDIMessage(event) {
 }
 
 
-// Change backgroundColor of the div Elements in the css-file based on Array input
+// Change backgroundColor of the div Elements in the CSS-file based on Array input
 function changeColor() {
     var i;
     for (i = 0; i < 32; i++) {
@@ -755,6 +754,7 @@ function playSound(buffer, time) {
     source.start(time);
 }
 
+// Convertiert RGB Farbwerte zu Hexadezimal Farbwerten. Diese werden im späteren Programmverlauf benötigt.
 function convertToHex(str){
     var raw = str.match(/(\d+)/g);
     var hexr = parseInt(raw[0]).toString(16);
@@ -767,8 +767,8 @@ function convertToHex(str){
     return hex;
   }
 
-// Funktion, welche an einer bestimmten Spalte, Zeile nachschaut welche Farbe vorhanden ist und daraufhin
-// den ensprechenden Sound zurückgibt
+// Funktion, welche an einer bestimmten Spalte und Zeile nachschaut, welche Farbe vorhanden ist und daraufhin
+// den ensprechenden audioBuffer zurückgibt.
 function whichSound(Spalte, Zeile) {
     var element = document.getElementById('B' + (Spalte + Zeile)),
         style = window.getComputedStyle(element),
@@ -795,10 +795,10 @@ function whichSound(Spalte, Zeile) {
     }
 }
 
-// Funktion, welche durch setInterval unten alle 90 bpm wiederholt wird.
-// Sie geht in der ersten for-Schleife jede Spalte und in der zweiten for-Schleife jede Zeile der Spalte durch.
+// Diese Funktion wird durch setTimeout alle 90 bpm wiederholt.
+// Sie geht in der ersten for-Schleife jede Spalte und in der zweiten for-Schleife jede Zeile der jeweiligen Spalte durch.
 // Alle Sounds, je nach Farbe bestimmt durch whichSound(), werden pro Spalte gleichzeitig abgespielt.
-// "eight" ist für den Abspielzeitpunkt, also in welchem achtel eines Takes wir uns befinden zuständig
+// "eight" wird für den Abspielzeitpunkt, also in welchem Achtel eines Takes wir uns befinden benötigt.
 function playBeat() {
     let startTime = context.currentTime;
     let eight = 0;
@@ -808,6 +808,8 @@ function playBeat() {
             //console.log(i, j)
             playSound(whichSound(i, j), startTime + eight * eighthNoteTime);
         }
+        
+        // Bei jedem Start der playBeat() wird ein Animationsablauf für einen Takt "gescheduled".
 
         setTimeout(function(){ 
             document.getElementById("one").style.opacity = 0.7;
@@ -852,7 +854,7 @@ function playBeat() {
     }
 }
 
-// Gets called when we press Start and forewards to the loopTimeout()
+// Gets called when we press Start and forewards to the loopTimeout().
 function startTimeout(){
     setTimeout(function () {
         if (isPlaying){
@@ -862,7 +864,7 @@ function startTimeout(){
     }, 40);
 };
 
-// Calls our playBeat() function every eightNoteTime*8*1000 seconds
+// Calls our playBeat() function every eightNoteTime*8*1000 seconds.
 function loopTimeout(){
     loopTout = setTimeout(function () {
         if (isPlaying){
@@ -891,24 +893,21 @@ function changeParameter() {
     }
 }
 
+// Hier werden die Slider anhand eines MIDI Inputs verändert.
 function changeSliderParamMIDI() {
     let gainMIDI = Math.round(((felder[32]/128)*5 + Number.EPSILON) * 100) / 100;
     let speedMIDI = felder[33];
     
     gain.gain.value = gainMIDI;
-    //console.log(gain.gain.value);
     document.querySelector("#gainOutput").innerHTML = gainMIDI + " dB";
     document.getElementById("gainSlider").value = gainMIDI*100;
 
     eighthNoteTime = (60 / (speedMIDI+50)) / 2;
-    //console.log(eighthNoteTime);
     document.querySelector("#speedOutput").innerHTML = speedMIDI+50 + " bpm";
     document.getElementById("speedSlider").value = speedMIDI + 50;
 }
 
-// Die sollte dann immer aufgerufen werden, wenn eine MIDI Note kommt, oder ein div angeklickt wird 
-// Wenn ein Feld angeklickt wird, wird die changeColor() Funktion aufgerufen
-// WICHTIG: Nur ein setInterval pro js wahrscheinlich möglich (nicht 100% sicher)
+// Wenn ein Feld angeklickt wird, wird die changeColor() Funktion aufgerufen.
 var felders = document.getElementsByClassName("Feld");
 for (var i = 0; i < felders.length; i++) {
     felders[i].addEventListener("mouseup", function(e) {
@@ -922,7 +921,8 @@ startButton.addEventListener("click", function (e) {
     if (isPlaying) {
         startButton.innerHTML = "START";
         clearTimeout(loopTout);
-        //startButton.style.backgroundImage = "";
+        //startButton.style.backgroundImage = "url('/PNGs/legostein1.PNG')";
+
     } else {
         startButton.innerHTML = "STOP";
         startTimeout()
@@ -931,7 +931,7 @@ startButton.addEventListener("click", function (e) {
     isPlaying = !isPlaying;
 });
 
-//Legendensounds
+// Eventlistener für die jeweiligen Sounds in der Legende.
 document.querySelector("#rot").addEventListener("mouseup", function(e){
     let sound = new Audio("/sounds/sound1.wav");
     let soundNode = context.createMediaElementSource(sound);
@@ -944,6 +944,7 @@ document.querySelector("#rot").addEventListener("mouseup", function(e){
 
     sound.play();
 })
+
 document.querySelector("#gruen").addEventListener("mouseup", function(e){
     let sound = new Audio("/sounds/sound2.wav");
     let soundNode = context.createMediaElementSource(sound);
@@ -956,6 +957,7 @@ document.querySelector("#gruen").addEventListener("mouseup", function(e){
 
     sound.play();
 })
+
 document.querySelector("#hellblau").addEventListener("mouseup", function(e){
     let sound = new Audio("/sounds/sound3.wav");
     let soundNode = context.createMediaElementSource(sound);
@@ -968,6 +970,7 @@ document.querySelector("#hellblau").addEventListener("mouseup", function(e){
 
     sound.play();
 })
+
 document.querySelector("#gelb").addEventListener("mouseup", function(e){
     let sound = new Audio("/sounds/sound4.wav");
     let soundNode = context.createMediaElementSource(sound);
@@ -980,6 +983,7 @@ document.querySelector("#gelb").addEventListener("mouseup", function(e){
 
     sound.play();
 })
+
 document.querySelector("#blau").addEventListener("mouseup", function(e){
     let sound = new Audio("/sounds/sound5.wav");
     let soundNode = context.createMediaElementSource(sound);
