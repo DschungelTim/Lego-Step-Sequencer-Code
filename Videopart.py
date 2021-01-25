@@ -118,16 +118,16 @@ def PinKoord (SPunktarray) :
                             yFelder.append(i+1)
     return yxFelder
 
-# Das senden Array wird zurückgesetzt und ner mit Werten von 0 - 31 bestückt.
-# Aus dem senden Array werden dann alle gesendeten herausgelöscht (mit pop),
-# danach wird mit den übriggebliebenen eine MidiNote mit velocity 0, also kein Stein auf dem Feld, gesendet.
+# Das senden Array wird zurückgesetzt und somit genullt.
+# Danach wird das Array mit den zu sendenden Velocities an den zu sendenden Noten befüllt.
+# Somit werden nur die Felder farbig, welche auch tatsächlich erkannt werden.
 def sendMIDIContainer():
     global senden
     senden = []
     for i in range(32):
         senden.append(0)
 
-    # Ruft sendMIDI für die jeweiligen Farbarrays auf
+    # Ruft sendMIDI für die jeweiligen Farbarrays auf.
     sendMIDI(felder_hellblau)
     sendMIDI(felder_rot)
     sendMIDI(felder_gruen)
@@ -143,10 +143,10 @@ def sendMidiNote(note, velocity):
     midiOutput.send(message)
     print(message)
 
-# Schaut welches Array im Argument steht und sendet dann die dementsprechende Midi Note
-# Über das Wörterbuch werden die hier errechneten Werte in die vom Javascript erwarteten umgerechnet
-# Die Zahl 1-4 gibt die Farbe des Steins an
-# Desweiteren wird aus dem notsenden Array die jeweils erkannte stelle gelöscht.
+# Schaut welches Array im Argument steht und sendet dann die dementsprechende Midi Note.
+# Über das Wörterbuch werden die hier errechneten Werte in die vom Javascript erwarteten umgerechnet.
+# Die Zahl 1-5 gibt die Farbe des Steins an.
+# Dem Array werden an den dementsprechenden Stellen dementsprechende Velocity werte eingesetzt.
 def sendMIDI (felder):
     for i in range(len(felder[0])):
         if felder == felder_hellblau:
@@ -212,14 +212,13 @@ while cap.isOpened():
     
         # Funktion aufrufen, um die center_daten in 2D Array mit informationen über "aktivierte" Felder umzuwandeln
         # Für drei rote Steine könnte dann zB. ein solches Array mit y und x Felderzahlen herauskommen:
-        #   felder_rot = [[1, 4], [1, 8]] für zwei Steine ganz oben links und ganz unten rechts.
+        # felder_rot = [[1, 4], [1, 8]] für zwei Steine ganz oben links und ganz unten rechts.
         # felder =[[die y-felder zahlen von 1-4], [die x-felder zahlen von 1-8]]
         felder_hellblau = PinKoord (center_hellblau)
         felder_rot = PinKoord (center_rot)
         felder_gruen = PinKoord (center_gruen)
         felder_orange = PinKoord (center_orange)
         felder_blau = PinKoord (center_blau)
-        print(felder_gruen)
         # Hierüber werden alle Midi Sendungen geregelt
         sendMIDIContainer()
         time.sleep(0.1)
